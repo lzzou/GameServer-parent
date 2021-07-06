@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <server>
+        <id>1</id> <!-- 服务器ID -->
+        <type>test</type> <!-- 服务器类型 -->
+        <address>172.22.101.165</address> <!-- 服务器IP -->
+        <ports>5000</ports> <!-- 端口 -->
+        <hasCheatPrivilege>true</hasCheatPrivilege> <!-- 是否具有作弊权限 -->
+        <isDebug>0</isDebug>
+    </server>
+
+    <!-- 缓存配置 -->
+    <cacheServer>
+        <ip>192.168.1.247</ip>
+        <port>6379</port>
+        <password>ZaTi&amp;st14gtv</password>
+        <expiredTime>72</expiredTime><!-- 过期时间 -->
+        <syncInterval desc="定时保存时间120s">120</syncInterval>
+        <isCompress desc="value是否压缩">false</isCompress>
+        <packages>com.zlz.cache</packages>
+        <redis>
+            <!--<detail key="0" desc="test0"/>
+            <detail key="1" desc="test1"/>
+            <detail key="2" desc="test2"/>
+            <detail key="3" desc="test3"/>-->
+            <detail key="7" desc="test7"/>
+        </redis>
+    </cacheServer>
+
+    <!-- 数据库配置 -->
+    <database>
+        <druid>
+            <db area="" name="main">
+                <url>jdbc:mysql://192.168.1.47:3417/zlz_parent?allowMultiQueries=true</url>
+                <username>root</username>
+                <password>Zyli*M1fX%09q</password>
+                <maxActive>20</maxActive>
+                <initialSize>10</initialSize>
+                <minIdle>5</minIdle>
+                <filters>stat</filters>
+                <maxWait>60000</maxWait>
+            </db>
+
+            <!--<db area="" name="db_log">
+                <url>jdbc:mysql://localhost:3306/log?allowMultiQueries=true
+                </url>
+                <username></username>
+                <password></password>
+                <maxActive desc="">5</maxActive>
+                <initialSize desc="">2</initialSize>
+                <minIdle desc="">2</minIdle>
+                <filters desc="">stat</filters>
+                <maxWait desc="">60000</maxWait>
+            </db>-->
+        </druid>
+    </database>
+
+    <!-- web服配置 -->
+    <web>
+        <port>9999</port>
+        <resourcePath>../web</resourcePath>
+        <welcomeFile>index.html</welcomeFile>
+        <packages>com.zlz.web</packages>
+        <isShowDirectory>true</isShowDirectory>
+        <mapping desc="第三方或者系统的配置servlet">
+            <!-- druid状态查看servlet -->
+            <servlet name="druid" classPath="com.alibaba.druid.support.http.StatViewServlet"
+                     url="/druid/*"/>
+        </mapping>
+    </web>
+</config>

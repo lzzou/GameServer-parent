@@ -1,0 +1,10 @@
+option java_package = "com.proto.common.gen";
+option java_outer_classname = "CommonOutMsg";
+
+/* 错误代码 */
+message ErrorCodeProto
+{
+	//错误代码
+	required int32 errorCode = 1;
+}
+

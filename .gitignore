@@ -1,0 +1,15 @@
+# IDE
+.idea/
+.settings/
+.project
+.classpath
+*.iml
+*dmds_conection*.txt
+dep.txt
+
+# Compiled class file
+*.class
+target/
+
+# Log file
+*.log

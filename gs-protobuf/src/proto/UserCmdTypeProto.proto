@@ -1,0 +1,61 @@
+option java_package = "com.proto.command";
+option java_outer_classname = "UserCmdType";
+
+/* 客户端上行协议 */
+enum UserCmdInType
+{
+  /********************************通用**********************************/
+  // 登录协议								UserLoginProto
+  USER_LOGIN = 1;
+  // Ping协议
+  USER_PING = 2;
+}
+
+/* 服务器下行协议 */
+enum UserCmdOutType
+{
+  // 客户端连接成功 --- 占位
+  USER_CONNECT_SUCCESS = 1;
+  // 反馈登录消息开始
+  USER_LOGIN_SUCCESS = 2;
+  // Ping
+  PING = 3;
+  // 反馈登录消息结束						UserOtherOutProto.PlayerLoginOverProtoOut
+  USER_LOGIN_SUCCESS_OVER = 22;
+  // 网络状态
+  NETWORK = 4;
+  // 错误代码								CommonOut.ErrorCodeProto
+  ERROR_CODE = 5;
+  // 系统消息
+  SYS_MSG = 6;
+  // 排队信息
+  LOGIN_WAIT_INFO = 7;
+  // 剔除玩家
+  KICK_USER = 8;
+  // 同步资源								CommonOut.ResourceSynProtoOut
+  SYNC_RESOURCE = 9;
+  // 玩家作弊
+  PLAYER_CHEAT_RESULT = 30000;
+  // 玩家作弊权限							PlayerCheatOutProto.PlayerCheatPrivilegeProtoOut
+  PLAYER_CHEAT_PRIVILEGE_RESULT = 30001;
+}
+
+/* 游戏内协议  -- 游戏二级协议(10000 - 20000) */
+enum GameCmdType
+{
+  // 二级协议起始命令
+  TWO_MIN = 10000;
+  // 二级协议最大值
+  TWO_MAX = 20000;
+  // 测试协议				GameOperateOutProto.GameTempProtoOut
+  GAME_TEMP = 19999;
+
+}
+
+/** 作弊类型 */
+enum CheatType
+{
+  // 古董开孔 参数 孔id
+  ANTIQUE_OPEN_SLOT = 1;
+}
+
