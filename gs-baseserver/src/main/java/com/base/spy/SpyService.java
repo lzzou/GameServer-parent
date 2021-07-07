@@ -1,5 +1,7 @@
 package com.base.spy;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,7 @@ import java.util.Map;
  * @date May 26, 2017 10:42:58 AM
  * @desc
  */
+@Slf4j
 public class SpyService {
     /**
      * 是否在运行中
@@ -47,7 +50,7 @@ public class SpyService {
         ThreadWatcher watcher = watchers.get(info.getThreadID());
 
         if (watcher.getCount() >= Spy.WARNING_COUNT) {
-            System.err.println(String.format("@_@ spy find thread %s blocked!!", info.getThreadID()));
+            log.error("@_@ spy find thread {} blocked!!", info.getThreadID());
         }
     }
 

@@ -9,6 +9,10 @@ import java.util.List;
  * web配置
  */
 public class WebServerConfig {
+    @XmlElementWrapper(name = "mapping")
+    @XmlElement(name = "servlet")
+    public List<ServletConfig> mapping;
+
     public static class ServletConfig {
         @XmlAttribute(name = "name")
         public String name;
@@ -45,7 +49,4 @@ public class WebServerConfig {
      */
     public String welcomeFile;
 
-    @XmlElementWrapper(name = "mapping")
-    @XmlElement(name = "servlet")
-    public List<ServletConfig> mapping;
 }

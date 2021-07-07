@@ -21,8 +21,6 @@
         <maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
         <spring-boot.version>2.1.4.RELEASE</spring-boot.version>
         <lombok.version>1.16.20</lombok.version>
-        <log4j2.version>2.8.1</log4j2.version>
-        <log4j-log4j2.version>2.3</log4j-log4j2.version>
         <jdk.version>1.8</jdk.version>
         <guava.version>28.2-jre</guava.version>
         <druid.version>1.1.9</druid.version>
@@ -43,6 +41,8 @@
         <apache.commons.collections.version>4.4</apache.commons.collections.version>
         <junit.version>4.12</junit.version>
         <fluentvalidator.version>1.0.9</fluentvalidator.version>
+        <logback-core.version>1.2.3</logback-core.version>
+        <mybatis.version>3.5.6</mybatis.version>
     </properties>
 
     <!-- all -->
@@ -57,6 +57,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
             <version>${spring-boot.version}</version>
+        </dependency>
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
         </dependency>
         <!-- aes -->
         <dependency>
@@ -132,16 +138,13 @@
             <artifactId>sigar</artifactId>
             <version>${sigar.version}</version>
         </dependency>
+        <!-- logback-core -->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j2.version}</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback-core.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j-log4j2.version}</version>
-        </dependency>
+
         <!-- gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>

@@ -1,11 +1,7 @@
-/**
- *
- */
 package com.zlz.scheduler;
 
 import com.zlz.thread.NamedThreadFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Comparator;
 import java.util.Queue;
@@ -18,29 +14,45 @@ import java.util.function.Consumer;
 /**
  * 一个简单、高性能的定时器和调度器
  *
- * @date Apr 28, 2017 11:31:06 AM
  * @author dansen
+ * @date Apr 28, 2017 11:31:06 AM
  * @desc
  */
+@Slf4j
 public class OakScheduler {
-    private static Logger logger = LoggerFactory.getLogger(OakScheduler.class);
-    /** 线程数量 */
+    /**
+     * 线程数量
+     */
     private static final int DEFAULT_INITIAL_CAPACITY = 5;
 
-    /** 一天间隔 */
+    /**
+     * 一天间隔
+     */
     public static final int DAY_INTERVAL = 24 * 3600 * 1000;
 
-    /** 唯一的单例 */
+    /**
+     * 唯一的单例
+     */
     private static OakScheduler currentScheduler = new OakScheduler();
-    /** 一个线程池 */
+    /**
+     * 一个线程池
+     */
     private ExecutorService service = null;
-    /** 任务队列 */
+    /**
+     * 任务队列
+     */
     private volatile Queue<Job> taskQueue = null;
-    /** 退出标识 */
+    /**
+     * 退出标识
+     */
     private volatile boolean isRunning = true;
-    /** 当前最近的任务时间 */
+    /**
+     * 当前最近的任务时间
+     */
     private volatile long leftTime = 0;
-    /** 任务ID */
+    /**
+     * 任务ID
+     */
     private volatile AtomicInteger jobID = new AtomicInteger(0);
 
     private class KernelJob extends Job {
@@ -81,7 +93,7 @@ public class OakScheduler {
                     service.submit(this);
                 }
             } catch (Exception e) {
-                logger.info("", e);
+                log.info("", e);
             }
         }
     }
@@ -112,12 +124,9 @@ public class OakScheduler {
     /**
      * 添加一个job
      *
-     * @param delay
-     *            延迟多长时间执行(ms)
-     * @param interval
-     *            间隔多长时间执行，如果是0则表示不重复执行(ms)
-     * @param job
-     *            任务对象
+     * @param delay    延迟多长时间执行(ms)
+     * @param interval 间隔多长时间执行，如果是0则表示不重复执行(ms)
+     * @param job      任务对象
      * @return
      */
     private long add(int delay, int interval, Job job) {
@@ -184,11 +193,11 @@ public class OakScheduler {
                     long current = System.currentTimeMillis();
 
                     if (current - time > 200) {
-                        logger.info(String.format("schedule (%s) spend too much time %d", consumer,
+                        log.info(String.format("schedule (%s) spend too much time %d", consumer,
                                 current - time));
                     }
                 } catch (Exception e) {
-                    logger.info("", e);
+                    log.info("", e);
                 }
             }
         });
@@ -231,8 +240,8 @@ public class OakScheduler {
     }
 
     public static void status() {
-        logger.warn("oak schedule infomations:");
-        logger.warn("---- job count:" + currentScheduler.taskQueue.size());
+        log.warn("oak schedule infomations:");
+        log.warn("---- job count:" + currentScheduler.taskQueue.size());
         System.out.println();
     }
 

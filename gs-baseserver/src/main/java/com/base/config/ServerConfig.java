@@ -25,7 +25,7 @@ public class ServerConfig {
     /**
      * 调试辅助
      */
-    public int isDebug;
+    public boolean isDebug;
     /**
      * 是否具有作弊权限
      */

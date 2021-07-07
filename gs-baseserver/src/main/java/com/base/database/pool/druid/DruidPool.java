@@ -46,7 +46,7 @@ public class DruidPool implements IDBPool {
         source.setMaxActive(config.maxActive);
         source.setMaxWait(config.maxWait);
 
-        if (config.filters != null && config.filters != "") {
+        if (config.filters != null && !"".equals(config.filters)) {
             try {
                 source.setFilters(config.filters);
             } catch (SQLException e) {
@@ -72,6 +72,7 @@ public class DruidPool implements IDBPool {
 
     @Override
     public String getState() {
+//        return source.getDataSourceStat();
         return "";
     }
 

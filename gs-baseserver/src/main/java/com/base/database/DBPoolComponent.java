@@ -9,8 +9,7 @@ import com.base.database.pool.DBHelper;
 import com.base.database.pool.IDBPool;
 import com.base.database.pool.druid.DruidPool;
 import com.zlz.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,9 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * 数据库连接池管理类
  */
 @Component
+@Slf4j
 public final class DBPoolComponent extends AbstractComponent {
-
-    private static final Logger log = LoggerFactory.getLogger(DBPoolComponent.class);
 
     protected static volatile boolean isStop = false;
 
@@ -103,7 +101,6 @@ public final class DBPoolComponent extends AbstractComponent {
      * 根据XML解析数据库连接池
      *
      * @param element 传进来xml的database节点
-     * @xml文件的格式应该如下：<br>
      */
     public boolean initWithDbXML(DatabaseConfig element) {
         try {

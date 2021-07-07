@@ -7,49 +7,60 @@ import com.base.redis.RedisClientComponent;
 import com.base.server.BaseServer;
 import com.base.spy.Spy;
 import com.base.web.WebComponent;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.zlz.component.MyServerNettyComponent;
 import com.zlz.component.RemoteCacheComponent;
 import com.zlz.component.ScriptComponent;
+import com.zlz.thread.NamedThreadFactory;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author: longzhang_zou
+ * @Author: zlz
  * @Date: 2020年05月28日 16:27
- * @Description: 我的服务
+ * @Description: 游戏主服务
  */
 @Log4j2
-public class MyServer extends BaseServer {
+public class GameServer extends BaseServer {
 
     /**
      * 服务单例
      */
-    private static final MyServer INSTANCE = new MyServer();
+    private volatile static GameServer INSTANCE;
 
-    private MyServer() {
+    private GameServer() {
     }
 
-    public static MyServer getInstance() {
+    /**
+     * double check 单例模式
+     *
+     * @return 实例
+     * @link 关于单例模式：https://www.runoob.com/design-pattern/singleton-pattern.html
+     */
+    public static GameServer getInstance() {
+        if (INSTANCE == null) {
+            synchronized (GameServer.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new GameServer();
+                }
+            }
+        }
         return INSTANCE;
     }
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        log.info("MyServer is starting...");
-        if (!MyServer.getInstance().start()) {
+        log.info("GameServer is starting...");
+        if (!GameServer.getInstance().start()) {
 
             log.error("MyServer has started failed.");
 
             System.exit(1);
-
         }
         log.info("log has started successfully, taken {} millis.", System.currentTimeMillis() - start);
-        //printNoBug();
+        printNoBug();
     }
 
     @Override
@@ -101,7 +112,7 @@ public class MyServer extends BaseServer {
                 return false;
             }
 
-            if (GlobalConfigComponent.getConfig().server.isDebug > 0) {
+            if (GlobalConfigComponent.getConfig().server.isDebug) {
                 Spy.start();
             }
             return ComponentManager.getInstance().start();
@@ -113,22 +124,22 @@ public class MyServer extends BaseServer {
 
 
     public static void startMonitorThread() {
-        ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("monitor-thread-%d").build();
+        NamedThreadFactory namedThreadFactory = new NamedThreadFactory("monitor-thread");
         ThreadPoolExecutor executor = new ThreadPoolExecutor(
-                1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(), threadFactory);
+                1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(), namedThreadFactory);
         executor.execute(() -> {
             try {
                 while (true) {
                     byte[] reads = new byte[1024];
                     System.in.read(reads, 0, 1024);
                     String val = new String(reads).trim();
-                    if (val.equalsIgnoreCase("q")) {
+                    if ("q".equalsIgnoreCase(val)) {
                         byte[] reads1 = new byte[1024];
                         System.err.println("Y or N");
                         System.in.read(reads1, 0, 1024);
                         val = new String(reads1).trim();
-                        if (val.equalsIgnoreCase("Y")) {
-                            MyServer.getInstance().stop();
+                        if ("Y".equalsIgnoreCase(val)) {
+                            GameServer.getInstance().stop();
                             break;
                         }
                     }

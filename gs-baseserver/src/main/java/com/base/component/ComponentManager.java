@@ -22,7 +22,7 @@ public class ComponentManager {
 
     private static final Logger log = LoggerFactory.getLogger(ComponentManager.class);
 
-    public static final ComponentManager INSTANCE = new ComponentManager();
+    public volatile static ComponentManager INSTANCE;
 
     /**
      * 类加载器
@@ -32,20 +32,25 @@ public class ComponentManager {
     /**
      * 组件集合 (添加的顺序保持不变)
      */
-    private static Map<String, IComponent> components = new LinkedHashMap<>();
+    private static final Map<String, IComponent> components = new LinkedHashMap<>();
 
     private ComponentManager() {
         loader = Thread.currentThread().getContextClassLoader();
     }
 
     public static ComponentManager getInstance() {
+        if (INSTANCE == null) {
+            synchronized (ComponentManager.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new ComponentManager();
+                }
+            }
+        }
         return INSTANCE;
     }
 
     public List<IComponent> getAllComponent() {
-        List<IComponent> list = new ArrayList<>();
-        list.addAll(components.values());
-        return list;
+        return new ArrayList<>(components.values());
     }
 
     public boolean addComponent(String className) {
@@ -55,7 +60,7 @@ public class ComponentManager {
 
             long spendTime = System.currentTimeMillis();
 
-            if (component != null && component.initialize()) {
+            if (component.initialize()) {
                 components.put(className, component);
 
                 if ((spendTime = System.currentTimeMillis() - spendTime) > 1000) {
@@ -80,7 +85,7 @@ public class ComponentManager {
 
             long spendTime = System.currentTimeMillis();
 
-            if (component != null && component.initialize()) {
+            if (component.initialize()) {
                 components.put(clazz.getName(), component);
 
                 if ((spendTime = System.currentTimeMillis() - spendTime) > 1000) {
@@ -161,7 +166,7 @@ public class ComponentManager {
     /**
      * 启动组件管理器。
      *
-     * @return
+     * @return 启动结果
      */
     public boolean start() {
         for (Entry<String, IComponent> entry : components.entrySet()) {
@@ -201,7 +206,7 @@ public class ComponentManager {
      * 重新加载所有组件
      *
      * @param excludes 排除的组件
-     * @return
+     * @return 加载结果
      */
     public boolean reload(List<String> excludes) {
         for (Entry<String, IComponent> entry : components.entrySet()) {
@@ -220,7 +225,7 @@ public class ComponentManager {
      * 加载指定组件
      *
      * @param componentName
-     * @return
+     * @return 加载结果
      */
     public boolean reloadSingle(String componentName) {
         IComponent module = components.get(componentName);

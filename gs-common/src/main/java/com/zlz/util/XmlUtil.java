@@ -103,8 +103,7 @@ public class XmlUtil {
         try {
             JAXBContext context = JAXBContext.newInstance(cla);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            T result = (T) unmarshaller.unmarshal(new StringReader(str));
-            return result;
+            return (T) unmarshaller.unmarshal(new StringReader(str));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -9,6 +9,11 @@ import java.util.List;
  * 缓存服务器代理配置
  */
 public class CacheServerConfig {
+
+    @XmlElementWrapper(name = "redis")
+    @XmlElement(name = "detail")
+    public List<RedisConfig> redisList;
+
     public static class RedisConfig {
         @XmlAttribute
         public int key;
@@ -31,7 +36,4 @@ public class CacheServerConfig {
 
     public String packages;
 
-    @XmlElementWrapper(name = "redis")
-    @XmlElement(name = "detail")
-    public List<RedisConfig> redisList;
 }

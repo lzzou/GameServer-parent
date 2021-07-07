@@ -9,6 +9,9 @@ import java.util.List;
  * 数据库连接配置
  */
 public class DatabaseConfig {
+    @XmlElementWrapper(name = "druid")
+    @XmlElement(name = "db")
+    public List<DruidPoolConfig> druidPools;
 
     /**
      * Druid连接池配置
@@ -51,9 +54,5 @@ public class DatabaseConfig {
          */
         public int maxWait = 600000;
     }
-
-    @XmlElementWrapper(name = "druid")
-    @XmlElement(name = "db")
-    public List<DruidPoolConfig> druidPools;
 
 }

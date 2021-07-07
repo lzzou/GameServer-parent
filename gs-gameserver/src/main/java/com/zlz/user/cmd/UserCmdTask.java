@@ -9,7 +9,6 @@ import com.game.object.player.GamePlayer;
 /**
  * 用户网络命令任务
  *
- * @author dream.wang
  *//*
 
 public class UserCmdTask extends AbstractTask {

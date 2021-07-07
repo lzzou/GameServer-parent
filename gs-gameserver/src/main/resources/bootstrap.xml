@@ -6,7 +6,7 @@
         <address>172.22.101.165</address> <!-- 服务器IP -->
         <ports>5000</ports> <!-- 端口 -->
         <hasCheatPrivilege>true</hasCheatPrivilege> <!-- 是否具有作弊权限 -->
-        <isDebug>0</isDebug>
+        <isDebug>true</isDebug>
     </server>
 
     <!-- 缓存配置 -->

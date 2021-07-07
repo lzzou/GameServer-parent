@@ -8,7 +8,7 @@
     <!-- 动态日志级别 -->
     <jmxConfigurator/>
     <!-- 可选：定义文件名称 -->
-    <property name="project_name" value="gs-gameserver"/>
+    <property name="project_name" value="gs-baseserver"/>
     <!-- 定义日志文件 输出位置 -->
     <!-- <property name="log_dir" value="C:/test" />-->
     <property name="log_dir" value="logs/${project_name}"/>

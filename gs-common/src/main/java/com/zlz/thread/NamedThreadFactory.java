@@ -1,7 +1,6 @@
 package com.zlz.thread;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.concurrent.ThreadFactory;
@@ -10,10 +9,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 命名线程生成工厂，仅为了给所用线程池所创建的线程提供命名支持
+ *
+ * @Author: zlz
  */
+@Slf4j
 public class NamedThreadFactory implements ThreadFactory, UncaughtExceptionHandler {
-
-    private static final Logger log = LoggerFactory.getLogger(NamedThreadFactory.class);
 
     private final AtomicInteger threadID = new AtomicInteger();
 
@@ -45,14 +45,15 @@ public class NamedThreadFactory implements ThreadFactory, UncaughtExceptionHandl
     /**
      * {@inheritDoc}
      *
+     * @param r
      * @see ThreadFactory#newThread(Runnable)
      */
     @Override
     public Thread newThread(Runnable r) {
-        Thread t = new Thread(r, this.threadName + "-" + threadID.incrementAndGet());
-        t.setDaemon(this.daemon);
-        t.setUncaughtExceptionHandler(this);
-        return t;
+        Thread thread = new Thread(r, this.threadName + "-" + threadID.incrementAndGet());
+        thread.setDaemon(this.daemon);
+        thread.setUncaughtExceptionHandler(this);
+        return thread;
     }
 
     /**

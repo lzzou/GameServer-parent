@@ -2,17 +2,15 @@ package com.base.server;
 
 import com.base.hooker.BaseShutdownHooker;
 import com.base.hooker.IStopHooker;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * @Author: longzhang_zou
+ * @Author: zlz
  * @Date: 2020年05月28日 16:41
  * @Description: 服务器基础类，包含3个基础模板方法（start，loadComponent，stop）
  */
+@Slf4j
 public abstract class BaseServer implements IStopHooker {
-
-    private static final Logger log = LoggerFactory.getLogger(BaseServer.class);
 
     /**
      * 基础模板方法-start，启动同时，给服务器加上shutdownHooker钩子
@@ -28,6 +26,8 @@ public abstract class BaseServer implements IStopHooker {
 
     /**
      * 基础模板方法-loadComponent，加载组件
+     *
+     * @return 结果
      */
     protected abstract boolean loadComponent();
 
