@@ -27,12 +27,12 @@ public class ComponentManager {
     /**
      * 类加载器
      */
-    private ClassLoader loader = null;
+    private final ClassLoader loader;
 
     /**
      * 组件集合 (添加的顺序保持不变)
      */
-    private static final Map<String, IComponent> components = new LinkedHashMap<>();
+    private static final Map<String, IComponent> COMPONENTS = new LinkedHashMap<>();
 
     private ComponentManager() {
         loader = Thread.currentThread().getContextClassLoader();
@@ -50,7 +50,7 @@ public class ComponentManager {
     }
 
     public List<IComponent> getAllComponent() {
-        return new ArrayList<>(components.values());
+        return new ArrayList<>(COMPONENTS.values());
     }
 
     public boolean addComponent(String className) {
@@ -61,7 +61,7 @@ public class ComponentManager {
             long spendTime = System.currentTimeMillis();
 
             if (component.initialize()) {
-                components.put(className, component);
+                COMPONENTS.put(className, component);
 
                 if ((spendTime = System.currentTimeMillis() - spendTime) > 1000) {
                     log.warn("Component {} init spend time {} 毫秒!!", className, spendTime);
@@ -86,7 +86,7 @@ public class ComponentManager {
             long spendTime = System.currentTimeMillis();
 
             if (component.initialize()) {
-                components.put(clazz.getName(), component);
+                COMPONENTS.put(clazz.getName(), component);
 
                 if ((spendTime = System.currentTimeMillis() - spendTime) > 1000) {
                     log.warn("Component {} init spend time {} 毫秒!!", clazz.getName(), spendTime);
@@ -160,7 +160,7 @@ public class ComponentManager {
 
     @SuppressWarnings("unchecked")
     public <T extends IComponent> T getComponent(Class<T> t) {
-        return (T) components.get(t.getName());
+        return (T) COMPONENTS.get(t.getName());
     }
 
     /**
@@ -169,7 +169,7 @@ public class ComponentManager {
      * @return 启动结果
      */
     public boolean start() {
-        for (Entry<String, IComponent> entry : components.entrySet()) {
+        for (Entry<String, IComponent> entry : COMPONENTS.entrySet()) {
             IComponent component = entry.getValue();
 
             if (!component.start()) {
@@ -189,7 +189,7 @@ public class ComponentManager {
      * 关闭组件管理器。
      */
     public void stop() {
-        List<IComponent> iComponents = new ArrayList<>(components.values());
+        List<IComponent> iComponents = new ArrayList<>(COMPONENTS.values());
         Collections.reverse(iComponents);
 
         iComponents.forEach(p -> {
@@ -197,7 +197,7 @@ public class ComponentManager {
             p.stop();
             log.warn("****** Component:[{}] has stoped.******************", p.getClass().getName());
         });
-        components.clear();
+        COMPONENTS.clear();
 
         log.error("All component has stoped.");
     }
@@ -209,7 +209,7 @@ public class ComponentManager {
      * @return 加载结果
      */
     public boolean reload(List<String> excludes) {
-        for (Entry<String, IComponent> entry : components.entrySet()) {
+        for (Entry<String, IComponent> entry : COMPONENTS.entrySet()) {
             if (excludes != null && excludes.contains(entry.getKey())) {
                 continue;
             }
@@ -228,7 +228,7 @@ public class ComponentManager {
      * @return 加载结果
      */
     public boolean reloadSingle(String componentName) {
-        IComponent module = components.get(componentName);
+        IComponent module = COMPONENTS.get(componentName);
         if (module != null) {
             module.reload();
         }

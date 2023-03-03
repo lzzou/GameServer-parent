@@ -37,7 +37,7 @@ public class GameServer extends BaseServer {
      * double check 单例模式
      *
      * @return 实例
-     * @link 关于单例模式：https://www.runoob.com/design-pattern/singleton-pattern.html
+     * @link 关于单例模式：<a href="https://www.runoob.com/design-pattern/singleton-pattern.html"/>单例模式</a>
      */
     public static GameServer getInstance() {
         if (INSTANCE == null) {

@@ -18,6 +18,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 远程缓存管理组件
+ *
+ * @author zlz
  */
 @Slf4j
 public class RemoteCacheComponent extends AbstractComponent {
