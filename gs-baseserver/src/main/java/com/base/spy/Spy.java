@@ -7,9 +7,7 @@ import java.lang.management.ManagementFactory;
 /**
  * Java锁监测机制，防止死锁、Lock卡死问题
  *
- * @author dansen
- * @date May 26, 2017 10:35:06 AM
- * @desc
+ * @author zlz
  */
 
 @Slf4j

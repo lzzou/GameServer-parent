@@ -3,14 +3,13 @@ package com.base.net.client;
 import com.base.type.CommonNettyConst;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
  */
+@Slf4j
 public class ClientIOHandler extends ChannelInboundHandlerAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(ClientIOHandler.class);
 
     protected AbstractClientPacketHandler handler = null;
 
@@ -34,7 +33,7 @@ public class ClientIOHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        logger.info("收到消息：{}", msg);
+        log.info("收到消息：{}", msg);
         // super.channelRead(ctx, msg);
         // IClientConnection conn = (IClientConnection) ctx.channel().attr(CommonNettyConst.CLIENT_CONNECTION).get();
 //        this.handler.process(conn, msg);
@@ -48,6 +47,6 @@ public class ClientIOHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        logger.error("Exception:", cause);
+        log.error("Exception:", cause);
     }
 }

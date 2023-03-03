@@ -12,16 +12,15 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.Executor;
 
 /**
  * 服务器端的连接器
  */
+@Slf4j
 public class ServerNettyConnector implements IServerConnector {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ServerNettyConnector.class);
 
     /**
      * 连接会话
@@ -100,7 +99,7 @@ public class ServerNettyConnector implements IServerConnector {
             return true;
         } catch (Exception e) {
             reconnectedCount++;
-            LOGGER.error("Cann't connect to address:{}, port:{}. Exception: {}", getAddress(), getPort(), e.toString());
+            log.error("Cann't connect to address:{}, port:{}. Exception: {}", getAddress(), getPort(), e.toString());
             return false;
         }
     }

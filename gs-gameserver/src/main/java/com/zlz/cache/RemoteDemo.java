@@ -6,19 +6,16 @@ import com.base.rmi.IRemoteCode;
 import com.data.business.DemoBusiness;
 import com.data.entity.Demo;
 import com.zlz.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 
 /**
- * @Author: zlz
- * @Date: 2020年09月03日 14:53
- * @Description:
+ * @author zlz
  */
-@IRemoteCode(code = CacheType.Demo, desc = "Demo")
+@IRemoteCode(code = CacheType.DEMO, desc = "Demo")
+@Slf4j
 public class RemoteDemo extends RedisCommon {
-    private static final Logger logger = LoggerFactory.getLogger(RemoteDemo.class);
 
     private static final byte DEMO = 1;
 

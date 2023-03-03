@@ -3,33 +3,31 @@ package com.zlz.web;
 import com.base.web.BaseHandlerServlet;
 import com.base.web.WebHandleAnnotation;
 import com.data.entity.Demo;
-import com.zlz.cache.CacheType;
-import com.zlz.cache.RemoteDemo;
-import com.zlz.component.RemoteCacheComponent;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author: zlz
- * @Date: 2020年09月03日 10:51
- * @Description:
+ * @author zlz
  */
+@Slf4j
 @WebHandleAnnotation(name = "/demo", description = "demo")
 public class DemoController extends BaseHandlerServlet {
 
     @Override
     public String execute(String json) {
-        Demo demo = gson.fromJson(json, Demo.class);
+        //Demo demo = gson.fromJson(json, Demo.class);
 
-        RemoteDemo remoteDemo = RemoteCacheComponent.getModule(CacheType.Demo);
+        //RemoteDemo remoteDemo = RemoteCacheComponent.getModule(CacheType.Demo);
         // 校验 {"name":"呼吸","age":18,"remark":"备注"}
         // 入库
-        boolean b = remoteDemo.addDemo(demo);
-        logger.info("缓存结果:{}", b);
+        //boolean b = remoteDemo.addDemo(demo);
+        //log.info("缓存结果:{}", b);
 
-        Demo dbDemo = remoteDemo.getDemo(1L);
-        return "dbDemo " + gson.toJson(dbDemo);
+        //Demo dbDemo = remoteDemo.getDemo(1L);
+        //return "dbDemo " + gson.toJson(dbDemo);
+        return "";
     }
 
     public static void main(String[] args) {
@@ -39,6 +37,6 @@ public class DemoController extends BaseHandlerServlet {
         demo.setRemark("备注");
         Map<Object, Object> map = new HashMap<>();
         map.put("params", demo);
-        System.out.println(gson.toJson(map));
+        //System.out.println(gson.toJson(map));
     }
 }

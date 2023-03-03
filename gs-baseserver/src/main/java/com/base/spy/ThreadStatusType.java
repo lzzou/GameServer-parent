@@ -3,9 +3,7 @@ package com.base.spy;
 /**
  * 线程状态
  *
- * @author dansen
- * @date May 26, 2017 5:20:05 PM
- * @desc
+ * @author zlz
  */
 public enum ThreadStatusType {
     /**

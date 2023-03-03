@@ -1,8 +1,9 @@
 package com.base.hooker;
 
 /**
- * @Author: zlz
  * 停止的hooker
+ *
+ * @author zlz
  */
 public interface IStopHooker {
     /**

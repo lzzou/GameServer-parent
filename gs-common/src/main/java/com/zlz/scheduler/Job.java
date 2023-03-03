@@ -4,9 +4,7 @@
 package com.zlz.scheduler;
 
 /**
- * @date Apr 28, 2017 11:34:08 AM
- * @author dansen
- * @desc
+ * @author zlz
  */
 public abstract class Job implements Runnable {
     private boolean isStop = false;
@@ -23,8 +21,7 @@ public abstract class Job implements Runnable {
     }
 
     /**
-     * @param jobID
-     *            the jobID to set
+     * @param jobID the jobID to set
      */
     public void setJobID(long jobID) {
         this.jobID = jobID;
@@ -38,8 +35,7 @@ public abstract class Job implements Runnable {
     }
 
     /**
-     * @param nextTime
-     *            the nextTime to set
+     * @param nextTime the nextTime to set
      */
     public void setNextTime(long nextTime) {
         this.nextTime = nextTime;
@@ -53,8 +49,7 @@ public abstract class Job implements Runnable {
     }
 
     /**
-     * @param interval
-     *            the interval to set
+     * @param interval the interval to set
      */
     public void setInterval(long interval) {
         this.interval = interval;
@@ -68,8 +63,7 @@ public abstract class Job implements Runnable {
     }
 
     /**
-     * @param delay
-     *            the delay to set
+     * @param delay the delay to set
      */
     public void setDelay(long delay) {
         this.delay = delay;
@@ -83,8 +77,7 @@ public abstract class Job implements Runnable {
     }
 
     /**
-     * @param isStop
-     *            the isStop to set
+     * @param isStop the isStop to set
      */
     public void setStop(boolean isStop) {
         this.isStop = isStop;

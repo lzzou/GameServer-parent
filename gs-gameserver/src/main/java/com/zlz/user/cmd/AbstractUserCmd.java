@@ -3,17 +3,14 @@ package com.zlz.user.cmd;
 import com.base.command.ICommand;
 import com.base.net.CommonMessage;
 import com.base.net.client.IClientConnection;
-import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 抽象用户命令调度器
  */
+@Slf4j
 public abstract class AbstractUserCmd extends ICommand {
-    protected static Gson gson = new Gson();
 
-    private final Logger logger = LoggerFactory.getLogger(getClass().getName());
 
     /**
      * 建立连接
@@ -29,7 +26,7 @@ public abstract class AbstractUserCmd extends ICommand {
     public final void execute(IClientConnection conn, CommonMessage packet) {
         long time = System.currentTimeMillis();
         if (conn == null) {
-            logger.error("AbstractUserCmd IClientConnection Is Null.");
+            log.error("AbstractUserCmd IClientConnection Is Null.");
             return;
         }
 

@@ -3,9 +3,7 @@ package com.base.spy;
 /**
  * 线程信息
  *
- * @author dansen
- * @date May 26, 2017 3:53:23 PM
- * @desc
+ * @author zlz
  */
 public class ThreadInfo {
     private String threadID;

@@ -3,15 +3,14 @@ package com.base.net.client;
 import com.base.command.ICommand;
 import com.base.component.AbstractCommandComponent;
 import com.base.net.CommonMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
  * 客户端封包处理器，将网络层接收到的数据包往上层传递。
  */
+@Slf4j
 public abstract class AbstractClientPacketHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractClientPacketHandler.class);
 
     /**
      * 封包处理
@@ -24,7 +23,7 @@ public abstract class AbstractClientPacketHandler {
         AbstractCommandComponent cm = getComponent();
 
         if (cm == null) {
-            LOGGER.error("*****AbstractClientPacketHandler : Can not found <AbstractCommandComponent>.******");
+            log.error("*****AbstractClientPacketHandler : Can not found <AbstractCommandComponent>.******");
             return;
         }
 
@@ -32,14 +31,14 @@ public abstract class AbstractClientPacketHandler {
         ICommand cmd = cm.getCommand(code);
 
         if (cmd == null) {
-            LOGGER.error("******AbstractClientPacketHandler : Can not found code = " + code + ",drop this packet.");
+            log.error("******AbstractClientPacketHandler : Can not found code = " + code + ",drop this packet.");
             return;
         }
 
         try {
             cmd.execute(conn, msg);
         } catch (Exception e) {
-            LOGGER.error("", e);
+            log.error("", e);
         }
     }
 

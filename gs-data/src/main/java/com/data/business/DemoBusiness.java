@@ -6,17 +6,12 @@ import com.data.factory.DemoFactory;
 import java.util.List;
 
 /**
- * @Author: zlz
- * @Date: 2020年09月03日 15:01
- * @Description:
+ * @author zlz
  */
 public class DemoBusiness {
     public static boolean addOrUpdateDemoBatch(List<Demo> list) {
         int[] result = DemoFactory.getDao().addOrUpdateBatch(list);
-        if (result != null) {
-            return true;
-        }
-        return false;
+        return result != null;
     }
 
     public static Demo getDemo(Long id) {

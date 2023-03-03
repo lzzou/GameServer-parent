@@ -2,16 +2,15 @@ package com.zlz.component;
 
 import com.base.component.AbstractComponent;
 import groovy.lang.GroovyShell;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 
 /**
  * 脚本组件
  */
+@Slf4j
 public class ScriptComponent extends AbstractComponent {
-    private static final Logger logger = LoggerFactory.getLogger(ScriptComponent.class);
 
     private static GroovyShell shell;
 
@@ -34,7 +33,7 @@ public class ScriptComponent extends AbstractComponent {
                 }
             }
         } catch (Exception e) {
-            logger.error("", e);
+            log.error("", e);
             return e.getMessage();
         }
     }
@@ -46,7 +45,7 @@ public class ScriptComponent extends AbstractComponent {
 
     @Override
     public void stop() {
-        logger.error("ScriptComponent stop...");
+        log.error("ScriptComponent stop...");
         shell.resetLoadedClasses();
         shell = null;
     }

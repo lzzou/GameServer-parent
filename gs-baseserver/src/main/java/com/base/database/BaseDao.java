@@ -1,8 +1,7 @@
 package com.base.database;
 
 import com.base.database.pool.DBHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,14 +14,14 @@ import java.util.Map;
 /**
  * IBaseDao中接口的实现类
  *
- * @author jinjin.chen
+ * @author zlz
  */
+@Slf4j
 public abstract class BaseDao<T> {
     /**
      * 数据库Helper
      */
     protected DBHelper dbhelper = null;
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseDao.class);
 
     public BaseDao(DBHelper helper) {
         setDBHelper(helper);
@@ -169,7 +168,7 @@ public abstract class BaseDao<T> {
                     entitis.add(entity);
                 }
             } catch (Exception e) {
-                LOGGER.error("Resultset转成实体出错", e);
+                log.error("Resultset转成实体出错", e);
             }
         }
         return entitis;
@@ -205,7 +204,7 @@ public abstract class BaseDao<T> {
                         result.add((S) rs.getObject(1));
                     }
                 } catch (Exception e) {
-                    LOGGER.error("读取单列数据错误", e);
+                    log.error("读取单列数据错误", e);
                 }
             }
 

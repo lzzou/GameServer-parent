@@ -2,9 +2,6 @@ package com.zlz.web.tool;
 
 import com.base.web.BaseHandlerServlet;
 import com.base.web.WebHandleAnnotation;
-import com.google.gson.JsonObject;
-import com.zlz.component.ScriptComponent;
-import com.zlz.util.StringUtil;
 
 /**
  * 脚本
@@ -31,13 +28,13 @@ public class ScriptServlet extends BaseHandlerServlet {
              ScriptComponent component = (ScriptComponent) ComponentManager.getInstance().getComponent(ScriptComponent.class);
              component.stop();
              */
-            JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
-            String script = jsonObject.get("script").getAsString();
+            //JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
+            //String script = jsonObject.get("script").getAsString();
 
             String result = "";
-            if (!StringUtil.isNullOrEmpty(script)) {
-                result = ScriptComponent.evaluate(script);
-            }
+            //if (!StringUtil.isNullOrEmpty(script)) {
+            //    result = ScriptComponent.evaluate(script);
+            //}
             return result;
         } catch (Exception e) {
             e.printStackTrace();

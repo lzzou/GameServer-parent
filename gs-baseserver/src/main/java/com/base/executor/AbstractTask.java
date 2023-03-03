@@ -1,15 +1,14 @@
 package com.base.executor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 抽象任务
  *
- * @author dream
+ * @author zlz
  */
+@Slf4j
 public abstract class AbstractTask implements Runnable {
-    protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractTask.class);
 
     protected static final int MAX_INTERVAL = 100;
 
@@ -37,10 +36,10 @@ public abstract class AbstractTask implements Runnable {
             execute();
             int interval = (int) (System.currentTimeMillis() - time);
             if (interval > 200) {
-                LOGGER.debug(String.format("AbstractTask:%s speed too much time:%d.", getName(), interval));
+                log.debug(String.format("AbstractTask:%s speed too much time:%d.", getName(), interval));
             }
         } catch (Exception e) {
-            LOGGER.error("任务出错：", e);
+            log.error("任务出错：", e);
         } finally {
             this.queue.complete();
         }

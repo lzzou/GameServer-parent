@@ -5,16 +5,15 @@ import com.base.type.CommonNettyConst;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 /**
  * 动态秘钥-解密处理
  */
+@Slf4j
 public class StrictMessageDecoder extends ByteToMessageDecoder {
-    private static final Logger LOGGER = LoggerFactory.getLogger(StrictMessageDecoder.class);
 
     // 获取密钥上下文
     private int[] getContext(ChannelHandlerContext session) {
@@ -92,7 +91,7 @@ public class StrictMessageDecoder extends ByteToMessageDecoder {
             // 当包头错误，从下一个字节开始读取，每次移动一个字节
             in.resetReaderIndex();
             in.readerIndex(in.readerIndex() + 1);
-            LOGGER.error(String.format("Package Header Error:%s -- %s", header, ctx.toString()));
+            log.error(String.format("Package Header Error:%s -- %s", header, ctx.toString()));
             // 因为加密后，协议必须按照顺序来发，一个都不能少，一旦有错无法纠正，所以直接断开
             ctx.channel().close();
             ctx.close();
@@ -112,8 +111,8 @@ public class StrictMessageDecoder extends ByteToMessageDecoder {
 
         if (packetLength <= 0 || packetLength >= Short.MAX_VALUE) {
             // 非法的数据长度
-            LOGGER.error("Message Length Invalid Length = " + packetLength + ", drop this Message.");
-            LOGGER.error(String.format("Disconnect the client:%s", ctx.channel().remoteAddress()));
+            log.error("Message Length Invalid Length = " + packetLength + ", drop this Message.");
+            log.error(String.format("Disconnect the client:%s", ctx.channel().remoteAddress()));
             ctx.channel().close();
             ctx.close();
             return;

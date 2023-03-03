@@ -8,9 +8,7 @@ import java.util.regex.Pattern;
 /**
  * 正则表达式工具类
  *
- * @author dansen
- * @date Jun 1, 2017 1:44:33 PM
- * @desc
+ * @author zlz
  */
 public class Regex {
     /**

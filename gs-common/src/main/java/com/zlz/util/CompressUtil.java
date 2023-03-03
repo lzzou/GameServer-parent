@@ -19,8 +19,7 @@ import java.util.zip.GZIPOutputStream;
 import java.util.zip.Inflater;
 
 /**
- * @author Dream
- * @date 2011-5-12
+ * @author zlz
  */
 public class CompressUtil {
 

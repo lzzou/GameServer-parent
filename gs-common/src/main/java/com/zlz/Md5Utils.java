@@ -10,8 +10,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * MD5加密工具类
  *
- * @author zhaoziwei
- * @date 2016年1月27日 上午10:23:42
+ * @author zlz
  */
 public class Md5Utils {
 

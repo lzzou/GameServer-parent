@@ -5,9 +5,9 @@ import com.base.hooker.IStopHooker;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @Author: zlz
- * @Date: 2020年05月28日 16:41
- * @Description: 服务器基础类，包含3个基础模板方法（start，loadComponent，stop）
+ * 服务器基础类，包含3个基础模板方法（start，loadComponent，stop）
+ *
+ * @author zlz
  */
 @Slf4j
 public abstract class BaseServer implements IStopHooker {

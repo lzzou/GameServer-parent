@@ -7,9 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @Author: zlz
- * @Date: 2020年06月15日 20:21
- * @Description:
+ * @author zlz
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

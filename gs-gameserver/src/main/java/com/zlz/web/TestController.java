@@ -4,9 +4,7 @@ import com.base.web.BaseHandlerServlet;
 import com.base.web.WebHandleAnnotation;
 
 /**
- * @Author: zlz
- * @Date: 2020年07月14日 19:10
- * @Description:
+ * @author zlz
  */
 @WebHandleAnnotation(name = "/test", description = "测试")
 public class TestController extends BaseHandlerServlet {

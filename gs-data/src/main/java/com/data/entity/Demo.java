@@ -3,9 +3,7 @@ package com.data.entity;
 import com.base.data.cache.ObjectClone;
 
 /**
- * @Author: zlz
- * @Date: 2020年09月03日 14:10
- * @Description:
+ * @author zlz
  */
 public class Demo extends ObjectClone {
 

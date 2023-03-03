@@ -2,6 +2,8 @@ package com.zlz.cache;
 
 /**
  * redis枚举
+ *
+ * @author zlz
  */
 public enum RedisDBType {
     /**

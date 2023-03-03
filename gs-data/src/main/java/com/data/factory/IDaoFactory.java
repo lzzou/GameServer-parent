@@ -7,6 +7,6 @@ public interface IDaoFactory {
     /**
      * 主库
      */
-    DBHelper dbHelper = DBPoolComponent.getDBHelper(DatabaseType.DB_MAIN);
+    DBHelper mainHelper = DBPoolComponent.getDBHelper(DatabaseType.DB_MAIN);
 
 }

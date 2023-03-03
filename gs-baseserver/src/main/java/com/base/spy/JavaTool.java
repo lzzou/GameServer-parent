@@ -6,9 +6,7 @@ import java.io.InputStreamReader;
 /**
  * Java工具接口
  *
- * @author dansen
- * @date May 26, 2017 11:19:53 AM
- * @desc
+ * @author zlz
  */
 public class JavaTool {
     /**

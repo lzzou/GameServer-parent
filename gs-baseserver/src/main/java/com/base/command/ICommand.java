@@ -7,7 +7,7 @@ import com.base.net.server.IServerConnector;
 /**
  * 命令接口
  *
- * @author dream
+ * @author zlz
  */
 public class ICommand {
     /**

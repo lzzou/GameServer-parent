@@ -6,8 +6,7 @@ import com.base.redis.RedisCommon;
 import com.base.rmi.IRemoteCode;
 import com.zlz.util.ClassUtil;
 import com.zlz.util.ThreadPoolUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,10 +19,10 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
  * 远程缓存管理组件
  */
+@Slf4j
 public class RemoteCacheComponent extends AbstractComponent {
     private static volatile boolean isStop = false;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RemoteCacheComponent.class);
 
     /**
      * 缓存处理
@@ -51,7 +50,7 @@ public class RemoteCacheComponent extends AbstractComponent {
             }
             return true;
         } catch (Exception e) {
-            LOGGER.error("缓存加载异常", e);
+            log.error("缓存加载异常", e);
         }
 
         return false;
@@ -71,7 +70,7 @@ public class RemoteCacheComponent extends AbstractComponent {
             threadSyncMysql.scheduleWithFixedDelay(RemoteCacheComponent::save, 5, interval, TimeUnit.SECONDS);
             return true;
         } catch (Exception e) {
-            LOGGER.error("RemoteCacheComponent start error:", e);
+            log.error("RemoteCacheComponent start error:", e);
             return false;
         }
 
@@ -105,10 +104,10 @@ public class RemoteCacheComponent extends AbstractComponent {
             long dt = System.currentTimeMillis() - time;
 
             if (dt > 100) {
-                LOGGER.info("Cache data save to database too much time：" + dt);
+                log.info("Cache data save to database too much time：" + dt);
             }
         } catch (Exception e) {
-            LOGGER.error("Cache Synchronize DB Exception:", e);
+            log.error("Cache Synchronize DB Exception:", e);
         } finally {
             lock.writeLock().unlock();
         }
@@ -131,7 +130,7 @@ public class RemoteCacheComponent extends AbstractComponent {
             return getRemoteSystem().getBeanList(className);
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("", e);
+            log.error("", e);
         }
 
         return new ArrayList<>(0);
@@ -175,7 +174,7 @@ public class RemoteCacheComponent extends AbstractComponent {
         try {
             return getRemoteSystem().getTableMaxID(tableID);
         } catch (Exception e) {
-            LOGGER.error("", e);
+            log.error("", e);
         }
 
         return -1;

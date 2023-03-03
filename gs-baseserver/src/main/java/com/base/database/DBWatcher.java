@@ -1,12 +1,12 @@
 package com.base.database;
 
 import com.zlz.util.TimeUtil;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * dao层数据库执行情况观察对象
  */
-@Log4j2
+@Slf4j
 public class DBWatcher {
     private long first = 0;
     private long second = 0;

@@ -1,10 +1,7 @@
 package com.base.web;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.zlz.util.ServletUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,19 +11,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 处理参数（params）为json格式字符串的Servlet基类。
+ *
+ * @author zlz
  */
+@Slf4j
 public abstract class BaseHandlerServlet extends HttpServlet implements IHandlerServlet {
     private static final long serialVersionUID = -7337936262053988938L;
 
-    protected static final Logger logger = LoggerFactory.getLogger(BaseHandlerServlet.class);
-
     protected String keyword;
-
-    protected static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
     protected HttpServletRequest request;
 
@@ -48,7 +44,7 @@ public abstract class BaseHandlerServlet extends HttpServlet implements IHandler
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         request.setCharacterEncoding("utf-8");
         this.request = request;
         this.response = response;
@@ -76,7 +72,7 @@ public abstract class BaseHandlerServlet extends HttpServlet implements IHandler
             result = execute(json);
         } catch (Exception e) {
             String msg = String.format("%s--请求异常:action(%s) params(%s)", clientIP, keyword, json);
-            logger.error(msg, e);
+            log.error(msg, e);
         }
         // }
 
@@ -126,7 +122,7 @@ public abstract class BaseHandlerServlet extends HttpServlet implements IHandler
             // result = execute(json);
         } catch (Exception e) {
             String msg = String.format("%s--请求异常:action(%s) params(%s)", clientIP, keyword, param);
-            logger.error(msg, e);
+            log.error(msg, e);
         }
         // }
 
@@ -151,7 +147,7 @@ public abstract class BaseHandlerServlet extends HttpServlet implements IHandler
         try {
             br = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
         } catch (IOException e) {
-            logger.error("获取请求参数错误:{}", e.getMessage());
+            log.error("获取请求参数错误:{}", e.getMessage());
         }
         String line = null;
         StringBuilder sb = new StringBuilder();
@@ -160,21 +156,11 @@ public abstract class BaseHandlerServlet extends HttpServlet implements IHandler
                 sb.append(line);
             }
         } catch (IOException e) {
-            logger.error("获取请求参数错误:{}", e.getMessage());
+            log.error("获取请求参数错误:{}", e.getMessage());
         }
         return sb.toString();
     }
 
-//    /**
-//     * 检查客户端IP或者域名是否合法。<br>
-//     * 子类可通过Override来改变检查范围。
-//     *
-//     * @param ip 发出请求的客户端IP
-//     * @return
-//     */
-//    protected boolean checkRequestIP(String ip) {
-//        return GlobalConfigComponent.getConfig().server.checkContainGMIP(ip);
-//    }
 
     /**
      * 获取请求客户端的IP
@@ -193,14 +179,10 @@ public abstract class BaseHandlerServlet extends HttpServlet implements IHandler
      */
     public String getUTF8(String value) {
         if (value != null) {
-            try {
-                if (!checkGBK(value)) {
-                    return new String(value.getBytes("ISO-8859-1"), "UTF-8");
-                } else {
-                    return value;
-                }
-            } catch (UnsupportedEncodingException e) {
-                logger.error("获取字符转换成utf-8出错", e);
+            if (!checkGBK(value)) {
+                return new String(value.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            } else {
+                return value;
             }
         }
         return "";

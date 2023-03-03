@@ -5,22 +5,28 @@ import com.base.type.CommonNettyConst;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
 
 /**
  * 动态加密-加密处理
+ *
+ * @author zlz
  */
+@Slf4j
 public class StrictMessageEncoder extends MessageToByteEncoder<CommonMessage> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(StrictMessageEncoder.class);
 
     public StrictMessageEncoder() {
 
     }
 
-    // 获取当前加密密钥
+    /**
+     * 获取当前加密密钥
+     *
+     * @param session
+     * @return
+     */
     private int[] getContext(ChannelHandlerContext session) {
         int[] keys = (int[]) session.channel().attr(CommonNettyConst.ENCRYPTION_KEY).get();
         if (keys == null) {
@@ -66,7 +72,7 @@ public class StrictMessageEncoder extends MessageToByteEncoder<CommonMessage> {
             // String ip = ((InetSocketAddress) session.channel().remoteAddress()).getAddress().toString();
             // LOGGER.error("send: {}, {}", ip, msg.headerToStr());
         } catch (Exception ex) {
-            LOGGER.error("catch error for encoding packet:", ex);
+            log.error("catch error for encoding packet:", ex);
             throw ex;
         }
     }

@@ -1,19 +1,30 @@
 package com.base.database;
 
 import com.base.component.AbstractComponent;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import java.io.InputStream;
 
 /**
  * 引入mybatis组件
  *
- * @Author: zlz
- * @Date: 2021/7/7 14:54
+ * @author zlz
  */
 public class MybatisComponent extends AbstractComponent {
 
 
     @Override
     public boolean initialize() {
+        try {
+            String resource = "mybatis-config.xml";
+            InputStream inputStream = Resources.getResourceAsStream(resource);
+            SqlSessionFactory build = new SqlSessionFactoryBuilder().build(inputStream);
+
+        } catch (Exception e) {
+
+        }
         return false;
     }
 

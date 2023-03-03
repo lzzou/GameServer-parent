@@ -1,5 +1,8 @@
 package com.base.event;
 
+/**
+ * @author zlz
+ */
 public class EventArg {
     /**
      * 事件类型

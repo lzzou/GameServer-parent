@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * 数据库连接配置
+ *
+ * @author zlz
  */
 public class DatabaseConfig {
     @XmlElementWrapper(name = "druid")

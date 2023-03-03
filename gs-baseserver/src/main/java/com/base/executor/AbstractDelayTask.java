@@ -3,7 +3,7 @@ package com.base.executor;
 /**
  * 延时任务
  *
- * @author dream
+ * @author zlz
  */
 public abstract class AbstractDelayTask extends AbstractTask {
     private long exeTime;

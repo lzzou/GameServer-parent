@@ -3,14 +3,13 @@ package com.base.net.server;
 import com.base.type.CommonNettyConst;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 服务器连接器的处理器
  */
+@Slf4j
 public class ServerConnectorIoHandler extends ChannelInboundHandlerAdapter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ServerConnectorIoHandler.class);
 
     private AbstractServerPacketHandler handler;
 
@@ -32,7 +31,7 @@ public class ServerConnectorIoHandler extends ChannelInboundHandlerAdapter {
 
         if (conn != null) {
             conn.disconnect();
-            LOGGER.info("session [IServerConnector] closed. host -- {}:{} ", conn.getAddress(), conn.getPort());
+            log.info("session [IServerConnector] closed. host -- {}:{} ", conn.getAddress(), conn.getPort());
         }
     }
 

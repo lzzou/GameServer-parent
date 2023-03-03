@@ -4,14 +4,13 @@ import com.base.net.CommonMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteOrder;
 import java.util.List;
 
+@Slf4j
 public class CommonMessageDecoder extends ByteToMessageDecoder {
-    private static Logger LOGGER = LoggerFactory.getLogger(CommonMessageEncoder.class);
 
     public CommonMessageDecoder() {
 
@@ -36,7 +35,7 @@ public class CommonMessageDecoder extends ByteToMessageDecoder {
         int length = in.order(ByteOrder.LITTLE_ENDIAN).readShort();
         if (length <= 0 || length >= Short.MAX_VALUE) {
             // 非法的数据长度
-            LOGGER.debug("Message Length Invalid Length = " + length
+            log.debug("Message Length Invalid Length = " + length
                     + ", drop this Message.");
             return;
         }

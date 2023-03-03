@@ -6,8 +6,7 @@ import com.base.executor.SelfDrivenTaskQueue;
 import com.base.object.AbstractUser;
 import com.base.type.CommonNettyConst;
 import com.zlz.module.AbstractUserModule;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -16,11 +15,8 @@ import java.util.Map;
 /**
  * 用户主类
  */
+@Slf4j
 public class User extends AbstractUser {
-    /**
-     * 日志记录
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(User.class);
 
     /**
      * 玩家命令处理线程池
@@ -139,7 +135,7 @@ public class User extends AbstractUser {
 
             return true;
         } catch (Exception e) {
-            LOGGER.error("GamePlayer Simple Load Exception:", e);
+            log.error("GamePlayer Simple Load Exception:", e);
         }
 
         return false;
@@ -197,7 +193,7 @@ public class User extends AbstractUser {
         try {
             // RemoteCacheComponent.getRemotePlayer().updatePlayerInfo(playerAllInfo.getPlayerInfo());
         } catch (Exception e) {
-            LOGGER.error("保存玩家数据失败", e);
+            log.error("保存玩家数据失败", e);
         }
     }
 
@@ -236,7 +232,7 @@ public class User extends AbstractUser {
             RemoteCacheComponent.getRemotePlayer().updatePlayerResource(playerAllInfo.getResourceInfo());*/
 
         } catch (Exception e) {
-            LOGGER.error("保存玩家数据失败", e);
+            log.error("保存玩家数据失败", e);
             return false;
         }
 
@@ -285,7 +281,7 @@ public class User extends AbstractUser {
             save();
 
         } catch (Exception e) {
-            LOGGER.error("catch error when user quit:", e);
+            log.error("catch error when user quit:", e);
         } finally {
             /*if (isForceKick) {
                 // 下线日志

@@ -3,7 +3,7 @@ package com.base.component;
 /**
  * 抽象组件接口
  *
- * @Author: zlz
+ * @author zlz
  */
 public abstract class AbstractComponent implements IComponent {
     @Override

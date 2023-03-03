@@ -1,8 +1,7 @@
 package com.base.executor;
 
 import com.zlz.util.ThreadPoolUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +12,8 @@ import java.util.concurrent.ExecutorService;
  *
  * @author dream
  */
+@Slf4j
 public class ExecutorPool {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExecutorPool.class);
 
     /**
      * 延时线程检查间隔
@@ -61,10 +60,10 @@ public class ExecutorPool {
                         try {
                             Thread.sleep(CHECK_INTERVAL - interval);
                         } catch (Exception e) {
-                            LOGGER.error(String.format("delay task check exception. ", e));
+                            log.error(String.format("delay task check exception. ", e));
                         }
                     } else {
-                        LOGGER.warn(String.format("delay task check spend too much time. time:%d", interval));
+                        log.warn(String.format("delay task check spend too much time. time:%d", interval));
                     }
                 }
             });
@@ -92,11 +91,13 @@ public class ExecutorPool {
     }
 
     private void checkDelayTask(long time) {
-        if (delayList == null)
+        if (delayList == null) {
             return;
+        }
 
-        if (delayList.isEmpty())
+        if (delayList.isEmpty()) {
             return;
+        }
 
         synchronized (delayList) {
             delayListTemp.addAll(delayList);
@@ -105,8 +106,9 @@ public class ExecutorPool {
 
         List<AbstractDelayTask> list = new ArrayList<AbstractDelayTask>();
         for (AbstractDelayTask t : delayListTemp) {
-            if (!t.checkDelayFinishAndExecute(time))
+            if (!t.checkDelayFinishAndExecute(time)) {
                 list.add(t);
+            }
         }
 
         synchronized (delayList) {
@@ -120,16 +122,20 @@ public class ExecutorPool {
     public void shutdown() {
         isRunning = false;
 
-        if (delayList != null)
+        if (delayList != null) {
             delayList.clear();
+        }
 
-        if (delayListTemp != null)
+        if (delayListTemp != null) {
             delayListTemp.clear();
+        }
 
-        if (workerService != null)
+        if (workerService != null) {
             workerService.shutdownNow();
+        }
 
-        if (delayService != null)
+        if (delayService != null) {
             delayService.shutdownNow();
+        }
     }
 }

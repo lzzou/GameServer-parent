@@ -3,7 +3,7 @@ package com.base.component;
 /**
  * 组件接口。组件的生命周期：initialize->start->stop。
  *
- * @Author: zlz
+ * @author zlz
  */
 public interface IComponent {
     /**

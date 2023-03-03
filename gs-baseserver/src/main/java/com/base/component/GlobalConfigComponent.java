@@ -10,8 +10,9 @@ import java.net.URL;
 import java.util.Objects;
 
 /**
- * @Author: zlz
  * 全局配置组件
+ *
+ * @author zlz
  */
 @Component
 @Slf4j

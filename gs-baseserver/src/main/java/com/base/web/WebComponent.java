@@ -7,14 +7,13 @@ import com.base.config.WebServerConfig;
 import com.base.config.WebServerConfig.ServletConfig;
 import com.zlz.util.ClassUtil;
 import com.zlz.util.StringUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
@@ -26,9 +25,9 @@ import java.util.Objects;
 /**
  * 嵌入式http调用使用的连接组件
  */
+@Slf4j
 @Component
 public class WebComponent extends AbstractComponent {
-    private static final Logger log = LoggerFactory.getLogger(WebComponent.class);
 
     /**
      * jetty自带的server

@@ -11,8 +11,7 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.ExecutorService;
@@ -20,8 +19,8 @@ import java.util.concurrent.ExecutorService;
 /**
  * netty网络组件抽象基类。
  */
+@Slf4j
 public abstract class AbstractNettyComponent extends AbstractComponent {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractNettyComponent.class);
 
     protected ServerBootstrap bootstrap = null;
 
@@ -74,7 +73,7 @@ public abstract class AbstractNettyComponent extends AbstractComponent {
         bootstrap.option(ChannelOption.SO_BACKLOG, 256) // 当服务器请求处理线程全满时，用于临时存放已完成三次握手的请求的队列的最大长度
                 .option(ChannelOption.SO_RCVBUF, 1024 * 256) // 接受缓存区
                 .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT).childOption(ChannelOption.ALLOCATOR,
-                PooledByteBufAllocator.DEFAULT).childOption(ChannelOption.SO_SNDBUF, 1024 * 256) // 发送缓冲区
+                        PooledByteBufAllocator.DEFAULT).childOption(ChannelOption.SO_SNDBUF, 1024 * 256) // 发送缓冲区
                 .childOption(ChannelOption.TCP_NODELAY, true);// 保证高实时性，有数据发送时就马上发送
 
         return true;
@@ -85,9 +84,9 @@ public abstract class AbstractNettyComponent extends AbstractComponent {
         try {
             int port = getPort();
             bootstrap.bind(port);
-            LOGGER.info("Listening at port :" + port);
+            log.info("Listening at port :" + port);
         } catch (Exception e) {
-            LOGGER.error("", e);
+            log.error("", e);
             return false;
         }
 

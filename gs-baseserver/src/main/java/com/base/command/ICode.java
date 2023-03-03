@@ -7,6 +7,8 @@ import java.lang.annotation.Target;
 
 /**
  * 指令注解
+ *
+ * @author zlz
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

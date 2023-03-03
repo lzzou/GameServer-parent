@@ -12,9 +12,7 @@ import java.sql.Types;
 import java.util.List;
 
 /**
- * @Author: zlz
- * @Date: 2020年09月03日 15:05
- * @Description:
+ * @author zlz
  */
 public class DemoDaoImpl extends BaseDao<Demo> implements IDemoDao {
     public DemoDaoImpl(DBHelper helper) {

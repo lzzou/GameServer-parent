@@ -9,9 +9,7 @@ import java.util.concurrent.ScheduledExecutorService;
 /**
  * 线程池统一管理模块，便于排查问题（线程池必须命名）
  *
- * @author dansen
- * @date Jun 30, 2017 10:28:30 AM
- * @desc
+ * @author zlz
  */
 public class ThreadPoolUtil {
     /**

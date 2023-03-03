@@ -5,8 +5,7 @@ import com.base.database.DBParameter;
 import com.base.database.DBWatcher;
 import com.base.database.DataExecutor;
 import com.base.database.DataReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,9 +18,9 @@ import java.util.Map;
 /**
  * DB帮助
  */
+@Slf4j
 public class DBHelper {
 
-    private static final Logger log = LoggerFactory.getLogger(DBHelper.class);
 
     private IDBPool pool;
 

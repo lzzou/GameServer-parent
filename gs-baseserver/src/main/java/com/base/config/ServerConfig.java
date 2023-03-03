@@ -1,5 +1,8 @@
 package com.base.config;
 
+/**
+ * @author zlz
+ */
 public class ServerConfig {
     /**
      * 服务器ID

@@ -14,9 +14,7 @@ import java.util.function.Consumer;
 /**
  * 一个简单、高性能的定时器和调度器
  *
- * @author dansen
- * @date Apr 28, 2017 11:31:06 AM
- * @desc
+ * @author zlz
  */
 @Slf4j
 public class OakScheduler {

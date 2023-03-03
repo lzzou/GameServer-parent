@@ -1,7 +1,6 @@
 package com.base.redis;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,8 +12,8 @@ import java.util.Set;
 /**
  * 保存处理handler
  */
+@Slf4j
 public class RedisSaveHandler<E> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RedisSaveHandler.class);
 
     /**
      * 更新key
@@ -90,7 +89,7 @@ public class RedisSaveHandler<E> {
                 if (info != null) {
                     list.add(info);
                 } else {
-                    LOGGER.error("udpate:redis data is not exist.key:" + key);
+                    log.error("udpate:redis data is not exist.key:" + key);
                 }
             }
 
@@ -100,7 +99,7 @@ public class RedisSaveHandler<E> {
                 synchronized (keySet) {
                     keySet.addAll(keys);
                 }
-                LOGGER.error("RedisSaveHandler Save Exception:", e);
+                log.error("RedisSaveHandler Save Exception:", e);
             } finally {
                 keys.clear();
             }
@@ -121,7 +120,7 @@ public class RedisSaveHandler<E> {
                         list.add(temp);
                     } else {
                         // 在更新之前该记录已经被删除
-                        LOGGER.error("udpate:redis data is not exist.key:" + entry.getKey() + "," + subKey);
+                        log.error("udpate:redis data is not exist.key:" + entry.getKey() + "," + subKey);
                     }
                 }
             }
@@ -139,7 +138,7 @@ public class RedisSaveHandler<E> {
                     }
                 }
 
-                LOGGER.error("Exception:", e);
+                log.error("Exception:", e);
             } finally {
                 keys.clear();
             }

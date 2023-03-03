@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * web配置
+ *
+ * @author zlz
  */
 public class WebServerConfig {
     @XmlElementWrapper(name = "mapping")

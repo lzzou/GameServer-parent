@@ -5,6 +5,8 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * WebComponent相应接口注释
+ *
+ * @author zlz
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface WebHandleAnnotation {

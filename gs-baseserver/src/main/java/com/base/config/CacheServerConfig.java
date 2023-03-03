@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * 缓存服务器代理配置
+ *
+ * @author zlz
  */
 public class CacheServerConfig {
 

@@ -5,8 +5,7 @@ import com.base.component.Component;
 import com.base.component.GlobalConfigComponent;
 import com.base.config.CacheServerConfig;
 import com.base.config.CacheServerConfig.RedisConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,10 +15,10 @@ import java.util.Map;
 /**
  * redis客户端组件
  */
+@Slf4j
 @Component
 public class RedisClientComponent extends AbstractComponent {
 
-    private static final Logger log = LoggerFactory.getLogger(RedisClientComponent.class);
 
     /**
      * 数据过期时间（三天）

@@ -3,8 +3,7 @@ package com.base.component;
 import com.base.command.ICode;
 import com.base.command.ICommand;
 import com.zlz.util.ClassUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,9 +12,11 @@ import java.util.Objects;
 
 /**
  * 命令管理器组件
+ *
+ * @author zlz
  */
+@Slf4j
 public abstract class AbstractCommandComponent extends AbstractComponent {
-    private static Logger LOGGER = LoggerFactory.getLogger(AbstractCommandComponent.class);
 
     /**
      * 缓存命令对象
@@ -48,7 +49,7 @@ public abstract class AbstractCommandComponent extends AbstractComponent {
                         if (cmd != null) {
                             if (cmdCache.get(cmd.code()) != null) {
                                 ICommand command = cmdCache.get(cmd.code());
-                                LOGGER.error("cmd code error,code:{},old:{},new:{}.", cmd.code(), command.getClass().getName(),
+                                log.error("cmd code error,code:{},old:{},new:{}.", cmd.code(), command.getClass().getName(),
                                         clazz.getName());
                                 return false;
                             }
@@ -56,7 +57,7 @@ public abstract class AbstractCommandComponent extends AbstractComponent {
                             // continue;
                         }
                     } catch (Exception e) {
-                        LOGGER.error("load command fail, command name : " + clazz.getName(), e);
+                        log.error("load command fail, command name : " + clazz.getName(), e);
                         e.printStackTrace();
                     }
                 }
@@ -64,7 +65,7 @@ public abstract class AbstractCommandComponent extends AbstractComponent {
 
             return true;
         } catch (Exception e) {
-            LOGGER.error("命令管理器解析错误", e);
+            log.error("命令管理器解析错误", e);
             return false;
         }
     }

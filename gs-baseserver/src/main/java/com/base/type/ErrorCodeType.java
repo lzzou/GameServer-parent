@@ -1,9 +1,7 @@
 package com.base.type;
 
 /**
- * @author dansen
- * @date 2016年4月19日 下午6:07:56
- * @desc
+ * @author zlz
  */
 public enum ErrorCodeType {
     /**

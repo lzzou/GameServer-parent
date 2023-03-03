@@ -2,6 +2,9 @@ package com.base.config;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * @author zlz
+ */
 @XmlRootElement(name = "config")
 public class AllConfigList {
 

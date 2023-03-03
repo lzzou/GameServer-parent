@@ -1,7 +1,6 @@
 package com.base.net;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -15,8 +14,8 @@ import java.nio.ByteOrder;
  * 【分隔符|包长|校验和|code】【包体】。<br>
  * 其中，包头各部分长度为2字节。检验和计算范围从code开始，直到整个包结束。
  **/
+@Slf4j
 public class CommonMessage implements Serializable {
-    private static final Logger log = LoggerFactory.getLogger(CommonMessage.class);
 
     private static final long serialVersionUID = 1L;
 

@@ -1,7 +1,6 @@
 package com.base.event;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,9 +14,11 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 事件源。同一事件类型，支持多个监听者，并且监听者对象可以相同。
+ *
+ * @author zlz
  */
+@Slf4j
 public class EventSource implements IEventSource {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EventSource.class);
 
     /**
      * 监听列表。同一事件，可能存在多个相同的监听者。
@@ -43,7 +44,7 @@ public class EventSource implements IEventSource {
     @Override
     public void addListener(int eventType, IEventListener listener) {
         if (listener == null) {
-            LOGGER.error("listener is null.eventType:" + eventType);
+            log.error("listener is null.eventType:" + eventType);
             return;
         }
 
@@ -58,7 +59,7 @@ public class EventSource implements IEventSource {
                 lstns.add(listener);
             }
         } catch (Exception e) {
-            LOGGER.error("", e);
+            log.error("", e);
         } finally {
             this.lock.writeLock().unlock();
         }
@@ -79,7 +80,7 @@ public class EventSource implements IEventSource {
                 lstns.remove(listener);
             }
         } catch (Exception e) {
-            LOGGER.error("", e);
+            log.error("", e);
         } finally {
             this.lock.writeLock().unlock();
         }
@@ -103,7 +104,7 @@ public class EventSource implements IEventSource {
             }
 
         } catch (Exception e) {
-            LOGGER.error("", e);
+            log.error("", e);
         } finally {
             this.lock.writeLock().unlock();
         }
@@ -114,7 +115,7 @@ public class EventSource implements IEventSource {
         try {
             listeners.clear();
         } catch (Exception e) {
-            LOGGER.error("", e);
+            log.error("", e);
         } finally {
             this.lock.writeLock().unlock();
         }
@@ -146,7 +147,7 @@ public class EventSource implements IEventSource {
                     item.onEvent(arg);
                 }
             } catch (Exception e) {
-                LOGGER.error("", e);
+                log.error("", e);
             }
         }
     }
@@ -177,7 +178,7 @@ public class EventSource implements IEventSource {
                     listener.onEvent(eventArg);
                 }
             } catch (Exception e) {
-                LOGGER.error("", e);
+                log.error("", e);
             }
         }
     }

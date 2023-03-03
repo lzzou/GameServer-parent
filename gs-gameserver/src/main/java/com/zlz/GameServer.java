@@ -11,18 +11,18 @@ import com.zlz.component.MyServerNettyComponent;
 import com.zlz.component.RemoteCacheComponent;
 import com.zlz.component.ScriptComponent;
 import com.zlz.thread.NamedThreadFactory;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author: zlz
- * @Date: 2020年05月28日 16:27
- * @Description: 游戏主服务
+ * 游戏主服务
+ *
+ * @author zlz
  */
-@Log4j2
+@Slf4j
 public class GameServer extends BaseServer {
 
     /**

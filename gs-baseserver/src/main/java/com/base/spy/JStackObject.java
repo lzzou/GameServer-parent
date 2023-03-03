@@ -6,9 +6,7 @@ import java.util.List;
 /**
  * Java进程堆栈信息
  *
- * @author dansen
- * @date May 26, 2017 11:25:11 AM
- * @desc
+ * @author zlz
  */
 
 public class JStackObject {

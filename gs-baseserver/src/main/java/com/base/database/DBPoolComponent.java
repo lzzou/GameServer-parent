@@ -153,14 +153,12 @@ public final class DBPoolComponent extends AbstractComponent {
 
     @Override
     public boolean initialize() {
-        boolean result = initWithDbXML(GlobalConfigComponent.getConfig().database);
-        startupPool();
-        return result;
+        return initWithDbXML(GlobalConfigComponent.getConfig().database);
     }
 
     @Override
     public boolean start() {
-        return true;
+        return startupPool();
     }
 
     @Override

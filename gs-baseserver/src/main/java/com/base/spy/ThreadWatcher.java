@@ -6,9 +6,7 @@ import java.util.List;
 /**
  * 线程记录器
  *
- * @author dansen
- * @date Jun 1, 2017 12:02:58 PM
- * @desc
+ * @author zlz
  */
 public class ThreadWatcher {
 

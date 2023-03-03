@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * 命名线程生成工厂，仅为了给所用线程池所创建的线程提供命名支持
  *
- * @Author: zlz
+ * @author zlz
  */
 @Slf4j
 public class NamedThreadFactory implements ThreadFactory, UncaughtExceptionHandler {

@@ -1,7 +1,6 @@
 package com.base.executor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -9,9 +8,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 自驱动任务队列，队列中同时最多只能一个任务在执行。使用线程池执行任务。
+ *
+ * @author zlz
  */
+@Slf4j
 public class SelfDrivenTaskQueue {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SelfDrivenTaskQueue.class);
 
     private static int MAX_OVER_TASK = 30;
 
@@ -62,13 +63,12 @@ public class SelfDrivenTaskQueue {
                         if (this.taskQueue.peek() instanceof AbstractTask) {
                             AbstractTask task2 = (AbstractTask) this.taskQueue.peek();
 
-                            LOGGER.error("SelfDrivenTaskQueue Add Count Over 30.size:{} - executing name:{}",
+                            log.error("SelfDrivenTaskQueue Add Count Over 30.size:{} - executing name:{}",
                                     this.taskQueue.size(), task2.getName());
 
                             if (this.taskQueue.size() > MAX_STOP_TASK) {
-                                LOGGER.error("SelfDrivenTaskQueue Add Count Over 100.size return.:{} - executing name:{}",
+                                log.error("SelfDrivenTaskQueue Add Count Over 100.size return.:{} - executing name:{}",
                                         this.taskQueue.size(), task2.getName());
-                                return;
                             }
                         }
                     }
