@@ -1,8 +1,8 @@
 package com.base.redis;
 
 import com.base.component.GlobalConfigComponent;
-import com.zlz.util.CompressUtil;
-import com.zlz.util.JsonUtil;
+import com.game.util.CompressUtil;
+import com.game.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayInputStream;
@@ -32,7 +32,7 @@ public class RedisSerializeUtil {
 
             byte[] bytes = baos.toByteArray();
 
-            if (GlobalConfigComponent.getConfig() != null && GlobalConfigComponent.getConfig().cacheServer.isCompress) {
+            if (GlobalConfigComponent.getConfig() != null && GlobalConfigComponent.getConfig().cache.isCompress) {
                 return CompressUtil.compress(baos.toByteArray());
             } else {
                 return bytes;
@@ -50,7 +50,7 @@ public class RedisSerializeUtil {
         }
         ByteArrayInputStream bais = null;
         try {
-            if (GlobalConfigComponent.getConfig() != null && GlobalConfigComponent.getConfig().cacheServer.isCompress) {
+            if (GlobalConfigComponent.getConfig() != null && GlobalConfigComponent.getConfig().cache.isCompress) {
                 bytes = CompressUtil.decompressToBytes(bytes);
             }
 
@@ -72,7 +72,7 @@ public class RedisSerializeUtil {
             String result = JsonUtil.parseObjectToString(object);
             byte[] bytes = result.getBytes();
 
-            if (GlobalConfigComponent.getConfig() != null && GlobalConfigComponent.getConfig().cacheServer.isCompress) {
+            if (GlobalConfigComponent.getConfig() != null && GlobalConfigComponent.getConfig().cache.isCompress) {
                 return CompressUtil.compress(bytes);
             } else {
                 return bytes;
@@ -89,7 +89,7 @@ public class RedisSerializeUtil {
         }
 
         try {
-            if (GlobalConfigComponent.getConfig() != null && GlobalConfigComponent.getConfig().cacheServer.isCompress) {
+            if (GlobalConfigComponent.getConfig() != null && GlobalConfigComponent.getConfig().cache.isCompress) {
                 bytes = CompressUtil.decompressToBytes(bytes);
             }
 

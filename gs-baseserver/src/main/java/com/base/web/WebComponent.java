@@ -3,10 +3,10 @@ package com.base.web;
 import com.base.component.AbstractComponent;
 import com.base.component.Component;
 import com.base.component.GlobalConfigComponent;
-import com.base.config.WebServerConfig;
-import com.base.config.WebServerConfig.ServletConfig;
-import com.zlz.util.ClassUtil;
-import com.zlz.util.StringUtil;
+import com.base.config.toml.WebServerConfig;
+import com.base.config.toml.WebServerConfig.ServletConfig;
+import com.game.util.ClassUtil;
+import com.game.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -61,7 +61,6 @@ public class WebComponent extends AbstractComponent {
         try {
             server.start();
         } catch (Exception e) {
-            e.printStackTrace();
             log.error("WebComponent Start Exception:", e);
             return false;
         }
@@ -105,30 +104,31 @@ public class WebComponent extends AbstractComponent {
             if (web.mapping != null && !web.mapping.isEmpty()) {
                 for (ServletConfig config : web.mapping) {
                     Servlet servlet = (Servlet) ClassUtil.getClass(config.classPath).newInstance();
-                    servletContextHandler.addServlet(new ServletHolder(servlet), config.url);
+                    ServletHolder servletHolder = getServletHolder(config, servlet);
+                    servletContextHandler.addServlet(servletHolder, config.url);
 
                     log.info("web服务器添加Servlet:" + config.classPath);
                 }
             }
 
-            ResourceHandler resourceHandler = new ResourceHandler();
-
-            resourceHandler.setDirectoriesListed(web.isShowDirectory);
-            resourceHandler.setWelcomeFiles(new String[]{web.welcomeFile});
-
-            if (StringUtil.isNullOrEmpty(web.resourcePath)) {
-                resourceHandler.setResourceBase(".");
-                webAppContext.setResourceBase(".");
-            } else {
-                resourceHandler.setResourceBase(web.resourcePath);
-                webAppContext.setResourceBase(web.resourcePath);
-            }
-            // resource 和 context 的添加顺序必须如此
-            HandlerList handlerList = new HandlerList();
-            handlerList.addHandler(resourceHandler);
-            handlerList.addHandler(servletContextHandler);
-            handlerList.addHandler(webAppContext);
-            server.setHandler(handlerList);
+            //ResourceHandler resourceHandler = new ResourceHandler();
+            //
+            //resourceHandler.setDirectoriesListed(web.isShowDirectory);
+            //resourceHandler.setWelcomeFiles(new String[]{web.welcomeFile});
+            //
+            //if (StringUtil.isNullOrEmpty(web.resourcePath)) {
+            //    resourceHandler.setResourceBase(".");
+            //    webAppContext.setResourceBase(".");
+            //} else {
+            //    resourceHandler.setResourceBase(web.resourcePath);
+            //    webAppContext.setResourceBase(web.resourcePath);
+            //}
+            //// resource 和 context 的添加顺序必须如此
+            //HandlerList handlerList = new HandlerList();
+            //handlerList.addHandler(resourceHandler);
+            //handlerList.addHandler(servletContextHandler);
+            //handlerList.addHandler(webAppContext);
+            //server.setHandler(handlerList);
 
             log.info("web服务器启动--端口" + web.port);
         } catch (Exception e) {
@@ -137,6 +137,20 @@ public class WebComponent extends AbstractComponent {
         }
 
         return true;
+    }
+
+    private static ServletHolder getServletHolder(ServletConfig config, Servlet servlet) {
+        ServletHolder servletHolder = new ServletHolder(servlet);
+        if (config.allow != null) {
+            servletHolder.setInitParameter("allow", config.allow);
+        }
+        if (config.loginUsername != null) {
+            servletHolder.setInitParameter("loginUsername", config.loginUsername);
+        }
+        if (config.loginPassword != null) {
+            servletHolder.setInitParameter("loginPassword", config.loginPassword);
+        }
+        return servletHolder;
     }
 
     @Override

@@ -3,14 +3,13 @@ package com.base.database;
 import com.base.component.AbstractComponent;
 import com.base.component.Component;
 import com.base.component.GlobalConfigComponent;
-import com.base.config.DatabaseConfig;
-import com.base.config.DatabaseConfig.DruidPoolConfig;
+import com.base.config.toml.DatabaseConfig;
 import com.base.database.pool.DBHelper;
 import com.base.database.pool.IDBPool;
 import com.base.database.pool.druid.DruidPool;
-import com.zlz.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -98,23 +97,18 @@ public final class DBPoolComponent extends AbstractComponent {
     }
 
     /**
-     * 根据XML解析数据库连接池
+     * 根据config解析数据库连接池
      *
-     * @param element 传进来xml的database节点
+     * @param element 传进来config的database节点
      */
-    public boolean initWithDbXML(DatabaseConfig element) {
+    public boolean initWithDbConfig(List<DatabaseConfig> element) {
         try {
-            if (element.druidPools != null && !element.druidPools.isEmpty()) {
-                for (DruidPoolConfig object : element.druidPools) {
+            if (element != null) {
+                for (DatabaseConfig object : element) {
                     DruidPool pool = new DruidPool(object);
                     DBHelper dbHelper = new DBHelper(pool);
-                    if (StringUtil.isNullOrEmpty(object.area)) {
-                        addDBPool(object.name, pool);
-                        addDBHelper(object.name, dbHelper);
-                    } else {
-                        addDBPool(object.area + "_" + object.name, pool);
-                        addDBHelper(object.area + "_" + object.name, dbHelper);
-                    }
+                    addDBPool(object.name, pool);
+                    addDBHelper(object.name, dbHelper);
                     log.info("初始化 druid db pool：" + object.name);
                 }
             }
@@ -153,7 +147,7 @@ public final class DBPoolComponent extends AbstractComponent {
 
     @Override
     public boolean initialize() {
-        return initWithDbXML(GlobalConfigComponent.getConfig().database);
+        return initWithDbConfig(GlobalConfigComponent.getConfig().database);
     }
 
     @Override

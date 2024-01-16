@@ -1,0 +1,56 @@
+# 服务配置
+[server]
+ports = [5000]
+cheat = true
+isDebug = true
+
+# 数据库配置
+[[database]]
+name = "main"
+url = "jdbc:mysql://rm-3nssz704w05kl16n5.mysql.rds.aliyuncs.com:3303/zero?allowMultiQueries=true"
+username = "root"
+password = "NsvGgQ3puI90S2#5"
+filters = "stat"
+maxActive = 20
+initialSize = 10
+minIdle = 5
+maxWait = 60000
+
+#[[database]]
+#name = "log"
+#host = "jdbc:mysql://rm-3nssz704w05kl16n5.mysql.rds.aliyuncs.com:3303/zero?allowMultiQueries=true"
+#username = "root"
+#password = "NsvGgQ3puI90S2#5"
+#filters = "stat"
+#maxActive = 20
+#initialSize = 10
+#minIdle = 5
+#maxWait = 60000
+
+# 缓存配置
+[cache]
+hostname = "r-3nss5awbfgyfeg84re.redis.rds.aliyuncs.com"
+port = 6379
+password = "r-3nss5awbfgyfeg84re:NMSLKJD#sdf896Y"
+# 单位：小时
+expireTime = 72
+timeout = 1000
+syncInterval = 180
+isCompress = false
+packages = "com.game.cache"
+[[cache.detail]]
+key = "7"
+
+#web服务配置
+[web]
+port = 9999
+resourcePath = "web"
+welcomeFile = "index.html"
+packages = "com.game.web"
+isShowDirectory = false
+[[web.mapping]]
+name = "druid"
+classPath = "com.alibaba.druid.support.http.StatViewServlet"
+url = "/druid/*"
+loginUsername = "test"
+loginPassword = "test"

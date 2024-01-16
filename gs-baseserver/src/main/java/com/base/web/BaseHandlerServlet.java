@@ -1,6 +1,6 @@
 package com.base.web;
 
-import com.zlz.util.ServletUtil;
+import com.game.util.ServletUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletException;
@@ -84,11 +84,6 @@ public abstract class BaseHandlerServlet extends HttpServlet implements IHandler
         out.print(result);
         out.flush();
         out.close();
-    }
-
-    @Override
-    public String execute(String json, HttpServletRequest request, HttpServletResponse response) {
-        return "";
     }
 
     @Override

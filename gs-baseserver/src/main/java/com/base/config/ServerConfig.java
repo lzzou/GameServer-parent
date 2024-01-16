@@ -4,20 +4,6 @@ package com.base.config;
  * @author zlz
  */
 public class ServerConfig {
-    /**
-     * 服务器ID
-     */
-    public int id;
-
-    /**
-     * 服务器类型
-     */
-    public String type;
-
-    /**
-     * 服务器IP
-     */
-    public String address;
 
     /**
      * 服务器TCP监听端口
@@ -29,8 +15,9 @@ public class ServerConfig {
      * 调试辅助
      */
     public boolean isDebug;
+
     /**
-     * 是否具有作弊权限
+     * 是否开启作弊权限
      */
-    public boolean hasCheatPrivilege;
+    public boolean cheat;
 }

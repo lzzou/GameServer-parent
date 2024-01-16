@@ -1,141 +1,126 @@
-<!-- 级别从高到低 OFF 、 FATAL 、 ERROR 、 WARN 、 INFO 、 DEBUG 、 TRACE 、 ALL -->
-<!-- 日志输出规则 根据当前ROOT 级别，日志输出时，级别高于root默认的级别时 会输出 -->
-<!-- 以下 每个配置的 filter 是过滤掉输出文件里面，会出现高级别文件，依然出现低级别的日志信息，通过filter 过滤只记录本级别的日志 -->
-<!-- scan 当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。 -->
-<!-- scanPeriod 设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。 -->
-<!-- debug 当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->
-<configuration scan="true" scanPeriod="60 seconds" debug="false">
-    <!-- 动态日志级别 -->
-    <jmxConfigurator/>
-    <!-- 可选：定义文件名称 -->
-    <property name="project_name" value="gs-gameserver"/>
-    <!-- 定义日志文件 输出位置 -->
-    <!-- <property name="log_dir" value="C:/test" />-->
-    <property name="log_dir" value="logs/${project_name}"/>
-    <!-- 日志最大的历史 30天 -->
-    <property name="maxHistory" value="30"/>
-
-    <!-- ConsoleAppender 控制台输出日志 -->
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+scan：当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。
+scanPeriod：设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒当scan为true时，此属性生效。默认的时间间隔为1分钟。
+debug：当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。
+-->
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+    <!--添加配置文件-->
+    <!--    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>-->
+    <!--    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>-->
+    <!--获取 spring 配置中的 key 为 spring.application.name 的 value 值，
+    注意：如果是logback.xml，将加载不到配置值，需要改成logback-spring.xml。 原因：加载顺序 logback.xml -> xxx.yml -> logback.spring.xml-->
+    <!--    <springProperty scope="context" name="applicationName" source="spring.application.name"/>-->
+    <!-- 定义日志的根目录 -->
+    <property name="LOG_HOME" value="logs"/>
+    <!-- 定义日志文件名称 -->
+    <!--    <property name="PROJECT_NAME" value="${applicationName}"/>-->
+    <property name="PROJECT_NAME" value="GameServer-parent"/>
+    <!-- ch.qos.logback.core.ConsoleAppender 表示控制台输出 -->
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <!--
+        日志输出格式：
+            %d表示日期时间，
+            %thread表示线程名，
+            %-5level：级别从左显示5个字符宽度
+            %logger{50} 表示logger名字最长50个字符，否则按照句点分割。
+            %msg：日志消息，
+            %n是换行符
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) [%thread] %logger{50} - %msg%n
+        -->
         <encoder>
-            <pattern>
-                <!-- 设置日志输出格式 -->
-                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger - %msg%n
-            </pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5p) [%C:%L] - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- ERROR级别日志 -->
-    <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 RollingFileAppender -->
-    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!-- 过滤器，只记录WARN级别的日志 -->
-        <!-- 果日志级别等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志。 -->
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <!-- 设置过滤级别 -->
-            <level>ERROR</level>
-            <!-- 用于配置符合过滤条件的操作 -->
-            <onMatch>ACCEPT</onMatch>
-            <!-- 用于配置不符合过滤条件的操作 -->
-            <onMismatch>DENY</onMismatch>
-        </filter>
-        <!-- 最常用的滚动策略，它根据时间来制定滚动策略.既负责滚动也负责出发滚动 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!--日志输出位置 可相对、和绝对路径 -->
-            <fileNamePattern>
-                ${log_dir}/error/%d{yyyy-MM-dd}/error-log.log
-            </fileNamePattern>
-            <!-- 可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件假设设置每个月滚动，且<maxHistory>是6， 则只保存最近6个月的文件，删除之前的旧文件。注意，删除旧文件是，那些为了归档而创建的目录也会被删除 -->
-            <maxHistory>${maxHistory}</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>
-                <!-- 设置日志输出格式 -->
-                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger - %msg%n
-            </pattern>
-        </encoder>
-    </appender>
-
-    <!-- WARN级别日志 appender -->
-    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!-- 过滤器，只记录WARN级别的日志 -->
-        <!-- 果日志级别等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志。 -->
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <!-- 设置过滤级别 -->
-            <level>WARN</level>
-            <!-- 用于配置符合过滤条件的操作 -->
-            <onMatch>ACCEPT</onMatch>
-            <!-- 用于配置不符合过滤条件的操作 -->
-            <onMismatch>DENY</onMismatch>
-        </filter>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!--日志输出位置 可相对、和绝对路径 -->
-            <fileNamePattern>${log_dir}/warn/%d{yyyy-MM-dd}/warn-log.log</fileNamePattern>
-            <maxHistory>${maxHistory}</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <!-- INFO级别日志 appender -->
-    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+    <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 -->
+    <appender name="infoAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 指定日志文件的名称 -->
+        <file>${LOG_HOME}/${PROJECT_NAME}/${PROJECT_NAME}-info.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
         </filter>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log_dir}/info/%d{yyyy-MM-dd}/info-log.log</fileNamePattern>
-            <maxHistory>${maxHistory}</maxHistory>
+        <!--
+        当发生滚动时，决定 RollingFileAppender 的行为，涉及文件移动和重命名
+        TimeBasedRollingPolicy： 最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责出发滚动。
+        -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--
+            滚动时产生的文件的存放位置及文件名称 %d{yyyy-MM-dd}：按天进行日志滚动
+            %i：当文件大小超过maxFileSize时，按照i进行文件滚动
+            -->
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}/${PROJECT_NAME}-%d{yyyy-MM-dd}-info-%i.log</fileNamePattern>
+            <!--
+            可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件。假设设置每天滚动，
+            且maxHistory是365，则只保存最近365天的文件，删除之前的旧文件。注意，删除旧文件是，
+            那些为了归档而创建的目录也会被删除。
+            -->
+            <maxFileSize>100MB</maxFileSize>
+            <MaxHistory>30</MaxHistory>
+            <totalSizeCap>20GB</totalSizeCap>
         </rollingPolicy>
+        <!-- 日志输出格式： -->
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5p [%C:%L] - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- DEBUG级别日志 appender -->
-    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>DEBUG</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
+    <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 -->
+    <appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 指定日志文件的名称 -->
+        <file>${LOG_HOME}/${PROJECT_NAME}/${PROJECT_NAME}-error.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
         </filter>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log_dir}/debug/%d{yyyy-MM-dd}/debug-log.log</fileNamePattern>
-            <maxHistory>${maxHistory}</maxHistory>
+        <!--
+        当发生滚动时，决定 RollingFileAppender 的行为，涉及文件移动和重命名
+        TimeBasedRollingPolicy： 最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责出发滚动。
+        -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--
+            滚动时产生的文件的存放位置及文件名称 %d{yyyy-MM-dd}：按天进行日志滚动
+            %i：当文件大小超过maxFileSize时，按照i进行文件滚动
+            -->
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}/${PROJECT_NAME}-%d{yyyy-MM-dd}-error.%i.log</fileNamePattern>
+            <!--
+            可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件。假设设置每天滚动，
+            且maxHistory是365，则只保存最近365天的文件，删除之前的旧文件。注意，删除旧文件是，
+            那些为了归档而创建的目录也会被删除。
+            -->
+            <maxFileSize>100MB</maxFileSize>
+            <MaxHistory>30</MaxHistory>
+            <totalSizeCap>20GB</totalSizeCap>
         </rollingPolicy>
+        <!-- 日志输出格式： -->
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5p [%C:%L] - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- TRACE级别日志 appender -->
-    <appender name="TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>TRACE</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log_dir}/trace/%d{yyyy-MM-dd}/trace-log.log</fileNamePattern>
-            <maxHistory>${maxHistory}</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
+    <!--
+        logger主要用于存放日志对象，也可以定义日志类型、级别
+        name：表示匹配的logger类型前缀，也就是包的前半部分
+        level：要记录的日志级别，包括 TRACE < DEBUG < INFO < WARN < ERROR
+        additivity：作用在于children-logger是否使用 rootLogger配置的appender进行输出，
+        false：表示只用当前logger的appender-ref，true：
+        表示当前logger的appender-ref和rootLogger的appender-ref都有效
+    -->
+    <!-- Spring framework logger -->
+    <!--    <logger name="org.springframework">-->
+    <!--        <level value="INFO"/>-->
+    <!--        <appender-ref ref="consoleAppender"/>-->
+    <!--        <appender-ref ref="infoAppender"/>-->
+    <!--        <appender-ref ref="errorAppender"/>-->
+    <!--    </logger>-->
 
-    <!-- root级别 DEBUG -->
-    <root>
-        <!-- 打印debug级别日志及以上级别日志 -->
-        <level value="info"/>
-        <!-- 控制台输出 -->
-        <appender-ref ref="console"/>
-        <!-- 文件输出 -->
-        <appender-ref ref="ERROR"/>
-        <appender-ref ref="INFO"/>
-        <appender-ref ref="WARN"/>
-        <appender-ref ref="DEBUG"/>
-        <appender-ref ref="TRACE"/>
+
+    <!--
+    root与logger是父子关系，没有特别定义则默认为root，任何一个类只会和一个logger对应，
+    要么是定义的logger，要么是root，判断的关键在于找到这个logger，然后判断这个logger的appender和level。
+    -->
+    <root level="INFO">
+        <appender-ref ref="consoleAppender"/>
+        <appender-ref ref="infoAppender"/>
+        <appender-ref ref="errorAppender"/>
     </root>
 </configuration>

@@ -56,7 +56,7 @@ public interface IBaseDao<T> {
     /**
      * 根据脚本执行查询操作，不带参数
      *
-     * @param sql查询的脚本
+     * @param sql 查询的脚本
      * @return
      */
     T query(String sql);

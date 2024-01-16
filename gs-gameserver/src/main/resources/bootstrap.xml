@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <server>
-        <id>1</id> <!-- 服务器ID -->
-        <type>test</type> <!-- 服务器类型 -->
-        <address>172.22.101.165</address> <!-- 服务器IP -->
         <ports>5000</ports> <!-- 端口 -->
-        <hasCheatPrivilege>true</hasCheatPrivilege> <!-- 是否具有作弊权限 -->
+        <cheat>true</cheat> <!-- 是否具有作弊权限 -->
         <isDebug>true</isDebug>
     </server>
 
     <!-- 缓存配置 -->
     <cacheServer>
-        <ip>192.168.1.247</ip>
+        <ip>r-3nss5awbfgyfeg84re.redis.rds.aliyuncs.com</ip>
         <port>6379</port>
-        <password>ZaTi&amp;st14gtv</password>
+        <password>r-3nss5awbfgyfeg84re:NMSLKJD#sdf896Y</password>
         <expiredTime>72</expiredTime><!-- 过期时间 -->
         <syncInterval desc="定时保存时间120s">120</syncInterval>
         <isCompress desc="value是否压缩">false</isCompress>
-        <packages>com.zlz.cache</packages>
+        <packages>com.game.cache</packages>
         <redis>
             <!--<detail key="0" desc="test0"/>
             <detail key="1" desc="test1"/>
@@ -31,9 +28,9 @@
     <database>
         <druid>
             <db area="" name="main">
-                <url>jdbc:mysql://192.168.1.47:3417/zlz_parent?allowMultiQueries=true</url>
+                <url>jdbc:mysql://rm-3nssz704w05kl16n5.mysql.rds.aliyuncs.com:3303/zero?allowMultiQueries=true</url>
                 <username>root</username>
-                <password>Zyli*M1fX%09q</password>
+                <password>NsvGgQ3puI90S2#5</password>
                 <maxActive>20</maxActive>
                 <initialSize>10</initialSize>
                 <minIdle>5</minIdle>
@@ -60,7 +57,7 @@
         <port>9999</port>
         <resourcePath>../web</resourcePath>
         <welcomeFile>index.html</welcomeFile>
-        <packages>com.zlz.web</packages>
+        <packages>com.game.web</packages>
         <isShowDirectory>true</isShowDirectory>
         <mapping desc="第三方或者系统的配置servlet">
             <!-- druid状态查看servlet -->

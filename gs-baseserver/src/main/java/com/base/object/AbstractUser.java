@@ -4,9 +4,10 @@ import com.base.net.CommonMessage;
 import com.base.net.client.IClientConnection;
 import com.base.net.client.IConnectionHolder;
 import com.base.type.ErrorCodeType;
-import com.google.protobuf.GeneratedMessage.Builder;
+import com.google.protobuf.AbstractMessage;
 import com.proto.command.UserCmdType;
-import com.proto.common.gen.CommonOutMsg;
+import com.proto.common.CommonOutMsg;
+
 
 /**
  * 游戏玩家接口
@@ -51,7 +52,7 @@ public abstract class AbstractUser implements IConnectionHolder {
      * @param code
      * @param builder
      */
-    public void sendMessage(int code, Builder<?> builder) {
+    public void sendMessage(int code, AbstractMessage.Builder<?> builder) {
         if (isConnect()) {
             CommonMessage packet = new CommonMessage(code);
 

@@ -13,9 +13,9 @@ public class ICommand {
     /**
      * 客户端连接处理
      *
-     * @param session
-     * @param packet
-     * @throws Exception
+     * @param session session
+     * @param packet  CommonMessage
+     * @throws Exception 异常
      */
     public void execute(IClientConnection session, CommonMessage packet) throws Exception {
 
@@ -24,9 +24,9 @@ public class ICommand {
     /**
      * 服务器连服务器处理
      *
-     * @param session
-     * @param packet
-     * @throws Exception
+     * @param session session
+     * @param packet  CommonMessage
+     * @throws Exception 异常
      */
     public void execute(IServerConnector session, CommonMessage packet) throws Exception {
 

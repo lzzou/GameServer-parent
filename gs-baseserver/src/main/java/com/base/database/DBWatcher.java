@@ -1,6 +1,6 @@
 package com.base.database;
 
-import com.zlz.util.TimeUtil;
+import com.game.util.TimeUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**

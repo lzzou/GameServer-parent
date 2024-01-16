@@ -2,7 +2,7 @@ package com.base.net;
 
 import com.base.component.AbstractComponent;
 import com.base.component.GlobalConfigComponent;
-import com.zlz.util.ThreadPoolUtil;
+import com.game.util.ThreadPoolUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelInitializer;
@@ -69,12 +69,15 @@ public abstract class AbstractNettyComponent extends AbstractComponent {
                 acceptorInit(ch.pipeline());
             }
         });
-
-        bootstrap.option(ChannelOption.SO_BACKLOG, 256) // 当服务器请求处理线程全满时，用于临时存放已完成三次握手的请求的队列的最大长度
-                .option(ChannelOption.SO_RCVBUF, 1024 * 256) // 接受缓存区
+        // 当服务器请求处理线程全满时，用于临时存放已完成三次握手的请求的队列的最大长度
+        bootstrap.option(ChannelOption.SO_BACKLOG, 256)
+                // 接受缓存区
+                .option(ChannelOption.SO_RCVBUF, 1024 * 256)
+                // 发送缓冲区
                 .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT).childOption(ChannelOption.ALLOCATOR,
-                        PooledByteBufAllocator.DEFAULT).childOption(ChannelOption.SO_SNDBUF, 1024 * 256) // 发送缓冲区
-                .childOption(ChannelOption.TCP_NODELAY, true);// 保证高实时性，有数据发送时就马上发送
+                        PooledByteBufAllocator.DEFAULT).childOption(ChannelOption.SO_SNDBUF, 1024 * 256)
+                // 保证高实时性，有数据发送时就马上发送
+                .childOption(ChannelOption.TCP_NODELAY, true);
 
         return true;
     }
@@ -94,11 +97,11 @@ public abstract class AbstractNettyComponent extends AbstractComponent {
     }
 
     protected InetSocketAddress[] getPorts() {
-        String[] portStr = GlobalConfigComponent.getConfig().server.ports.split("\\,");
+        String[] portStr = GlobalConfigComponent.getConfig().server.ports;
         if (portStr.length > 0) {
             InetSocketAddress[] ports = new InetSocketAddress[portStr.length];
             for (int i = 0; i < ports.length; i++) {
-                ports[i] = new InetSocketAddress(Integer.valueOf(portStr[i]));
+                ports[i] = new InetSocketAddress(Integer.parseInt(portStr[i]));
             }
 
             return ports;

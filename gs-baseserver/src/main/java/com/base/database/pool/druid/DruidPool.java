@@ -1,7 +1,7 @@
 package com.base.database.pool.druid;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.base.config.DatabaseConfig.DruidPoolConfig;
+import com.base.config.toml.DatabaseConfig;
 import com.base.database.pool.IDBPool;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,9 +18,10 @@ public class DruidPool implements IDBPool {
 
 
     private DruidDataSource source;
-    private DruidPoolConfig config;
 
-    public DruidPool(DruidPoolConfig config) {
+    private DatabaseConfig config;
+
+    public DruidPool(DatabaseConfig config) {
         this.config = config;
     }
 
@@ -38,7 +39,7 @@ public class DruidPool implements IDBPool {
     @Override
     public boolean startup() {
         source = new DruidDataSource();
-        source.setDriverClassName("com.mysql.jdbc.Driver");
+        source.setDriverClassName("com.mysql.cj.jdbc.Driver");
         source.setUsername(config.username);
         source.setPassword(config.password);
         source.setUrl(config.url);
@@ -47,7 +48,7 @@ public class DruidPool implements IDBPool {
         source.setMaxActive(config.maxActive);
         source.setMaxWait(config.maxWait);
 
-        if (config.filters != null && !"".equals(config.filters)) {
+        if (config.filters != null && !config.filters.isEmpty()) {
             try {
                 source.setFilters(config.filters);
             } catch (SQLException e) {

@@ -1,6 +1,6 @@
 package com.base.component;
 
-import com.zlz.util.ClassUtil;
+import com.game.util.ClassUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -141,7 +141,7 @@ public class ComponentManager {
                 if (file.isFile()) {
                     // 取到对应的类名,这里的类名是权限定名
                     String className = fileName.substring(0, fileName.indexOf("."));
-                    if (packageName != null && !"".equals(packageName)) {
+                    if (packageName != null && !packageName.isEmpty()) {
                         className = packageName + "." + className;
                     }
                     Class<?> clazz = Class.forName(className);
@@ -224,7 +224,7 @@ public class ComponentManager {
     /**
      * 加载指定组件
      *
-     * @param componentName
+     * @param componentName componentName
      * @return 加载结果
      */
     public boolean reloadSingle(String componentName) {

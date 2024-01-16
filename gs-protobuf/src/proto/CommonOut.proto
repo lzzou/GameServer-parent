@@ -1,4 +1,4 @@
-option java_package = "com.proto.common.gen";
+option java_package = "com.proto.common";
 option java_outer_classname = "CommonOutMsg";
 
 /* 错误代码 */

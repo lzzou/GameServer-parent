@@ -728,7 +728,7 @@ public class RedisClient {
         Jedis jedis = null;
         try {
             jedis = pool.getResource();
-            jedis.quit();
+            jedis.close();
         } catch (Exception e) {
             log.error("redis quit error:", e);
         } finally {

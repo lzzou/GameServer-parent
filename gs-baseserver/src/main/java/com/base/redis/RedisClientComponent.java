@@ -3,8 +3,8 @@ package com.base.redis;
 import com.base.component.AbstractComponent;
 import com.base.component.Component;
 import com.base.component.GlobalConfigComponent;
-import com.base.config.CacheServerConfig;
-import com.base.config.CacheServerConfig.RedisConfig;
+import com.base.config.toml.CacheConfig;
+import com.base.config.toml.CacheConfig.RedisConfig;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -32,8 +32,8 @@ public class RedisClientComponent extends AbstractComponent {
 
     @Override
     public boolean initialize() {
-        CacheServerConfig cache = GlobalConfigComponent.getConfig().cacheServer;
-        List<RedisConfig> list = GlobalConfigComponent.getConfig().cacheServer.redisList;
+        CacheConfig cache = GlobalConfigComponent.getConfig().cache;
+        List<RedisConfig> list = GlobalConfigComponent.getConfig().cache.detail;
 
         if (list == null || list.size() <= 0) {
             return false;
@@ -46,9 +46,9 @@ public class RedisClientComponent extends AbstractComponent {
                     cache.expiredTime = EXPIRED_TIME;
                 }
 
-                if (client.init(cache.ip, cache.port, cache.expiredTime * 3600, cache.password, config.key)) {
+                if (client.init(cache.hostname, cache.port, cache.expiredTime * 3600, cache.password, config.key)) {
                     clientMap.put(config.key, client);
-                    log.info("add redis client : " + config.key + ", " + cache.ip + ":" + cache.port + ",expiredTime : " + cache.expiredTime);
+                    log.info("add redis client : " + config.key + ", " + cache.hostname + ":" + cache.port + ",expiredTime : " + cache.expiredTime);
                 } else {
                     System.exit(0);
                 }

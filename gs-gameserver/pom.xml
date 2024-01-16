@@ -12,7 +12,7 @@
     <artifactId>gs-gameserver</artifactId>
 
     <properties>
-        <groovy.version>2.4.20</groovy.version>
+        <groovy.version>2.4.21</groovy.version>
     </properties>
 
     <dependencies>
@@ -36,7 +36,6 @@
             <artifactId>gs-protobuf</artifactId>
             <version>${revision}</version>
         </dependency>
-
         <!-- groovy-all -->
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
@@ -44,4 +43,43 @@
             <version>${groovy.version}</version>
         </dependency>
     </dependencies>
+
+    <!--    <build>-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-resources-plugin</artifactId>-->
+    <!--                <version>3.2.0</version>-->
+    <!--                <executions>-->
+    <!--                    <execution>-->
+    <!--                        <id>copy-resources</id>-->
+    <!--                        <phase>generate-resources</phase>-->
+    <!--                        <goals>-->
+    <!--                            <goal>copy-resources</goal>-->
+    <!--                        </goals>-->
+    <!--                        <configuration>-->
+    <!--                            <outputDirectory>${project.build.directory}/classes/web</outputDirectory>-->
+    <!--                            <resources>-->
+    <!--                                <resource>-->
+    <!--                                    <directory>../web</directory>-->
+    <!--                                    <includes>-->
+    <!--                                        <include>*</include>-->
+    <!--                                    </includes>-->
+    <!--                                </resource>-->
+    <!--                            </resources>-->
+    <!--                        </configuration>-->
+    <!--                    </execution>-->
+    <!--                </executions>-->
+    <!--            </plugin>-->
+    <!--            <plugin>-->
+    <!--                <artifactId>maven-jar-plugin</artifactId>-->
+    <!--                <version>3.2.0</version>-->
+    <!--                <configuration>-->
+    <!--                    <includes>-->
+    <!--                        <include>web/**</include> &lt;!&ndash; 包含的资源文件类型 &ndash;&gt;-->
+    <!--                    </includes>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+    <!--        </plugins>-->
+    <!--    </build>-->
 </project>

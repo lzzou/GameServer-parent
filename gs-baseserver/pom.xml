@@ -12,12 +12,12 @@
     <artifactId>gs-baseserver</artifactId>
 
     <properties>
-        <netty.version>4.1.42.Final</netty.version>
-        <mybatis.version>3.5.6</mybatis.version>
+        <netty.version>4.1.90.Final</netty.version>
+        <mybatis.version>3.5.13</mybatis.version>
         <druid.version>1.2.16</druid.version>
         <mysql-connector-j.version>8.0.32</mysql-connector-j.version>
-        <jedis.version>2.9.0</jedis.version>
-
+        <jedis.version>5.0.0-alpha2</jedis.version>
+        <toml.version>1.1.0</toml.version>
     </properties>
 
     <dependencies>
@@ -67,7 +67,12 @@
             <version>${jedis.version}</version>
         </dependency>
 
-
+        <!-- toml -->
+        <dependency>
+            <groupId>org.tomlj</groupId>
+            <artifactId>tomlj</artifactId>
+            <version>${toml.version}</version>
+        </dependency>
     </dependencies>
 
 

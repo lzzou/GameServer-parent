@@ -140,7 +140,7 @@ public class DBHelper {
 
         if (conn != null) {
             try {
-                pstmt = conn.prepareStatement(sql);
+                pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 prepareCommand(pstmt, getParams(params));
                 resultData = executor.execute(pstmt, objects);
             } catch (Exception e) {
@@ -178,8 +178,6 @@ public class DBHelper {
             conn.commit();
             return result;
 
-        } catch (SQLException e) {
-            log.error("执行批量脚本出错", e);
         } catch (Exception e) {
             log.error("执行批量脚本出错", e);
 

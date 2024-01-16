@@ -1,11 +1,16 @@
 package com.base.component;
 
-import com.base.config.AllConfigList;
-import com.zlz.util.FileUtil;
-import com.zlz.util.XmlUtil;
+import com.alibaba.fastjson.JSON;
+import com.base.config.toml.AllConfig;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.tomlj.JsonOptions;
+import org.tomlj.Toml;
+import org.tomlj.TomlParseResult;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Objects;
 
@@ -18,24 +23,23 @@ import java.util.Objects;
 @Slf4j
 public class GlobalConfigComponent extends AbstractComponent {
 
-    private static final String CONFIG_FILE = "bootstrap.xml";
+    private static final String CONFIG_FILE = "bootstrap.toml";
 
-    private static AllConfigList config;
+    @Getter
+    private static AllConfig config;
 
-    public static AllConfigList getConfig() {
-        return config;
-    }
-
-    private static boolean init(String path) {
+    private static boolean init(InputStream stream) {
         try {
-            String xmlStr = FileUtil.readTxt(path, "UTF-8");
-
-            config = XmlUtil.toObject(xmlStr, AllConfigList.class);
+            // xml配置
+            // String xmlStr = FileUtil.readTxt(path, "UTF-8");
+            // config = XmlUtil.toObject(xmlStr, AllConfigList.class);
+            TomlParseResult toml = Toml.parse(stream);
+            config = JSON.parseObject(toml.toJson(JsonOptions.ALL_VALUES_AS_STRINGS), AllConfig.class);
             if (config == null) {
-                log.error("Server Config[{}] Load Failed.", path);
+                log.error("Config file Load Failed.");
                 return false;
             }
-
+            log.info("config load complete, config: {}", JSON.toJSONString(config));
             return true;
         } catch (IOException e) {
             log.error(e.getMessage());
@@ -45,10 +49,9 @@ public class GlobalConfigComponent extends AbstractComponent {
 
     @Override
     public boolean initialize() {
-        URL resource = getClass().getClassLoader().getResource(CONFIG_FILE);
-        if (Objects.nonNull(resource)) {
-            log.info("Global config file path : {}", resource.getPath());
-            return init(resource.getPath());
+        InputStream stream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE);
+        if (Objects.nonNull(stream)) {
+            return init(stream);
         } else {
             log.error("Can not find the global config file path, config file : {}", CONFIG_FILE);
             return false;

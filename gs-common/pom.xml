@@ -12,7 +12,9 @@
     <artifactId>gs-common</artifactId>
 
     <properties>
-        <jetty.version>9.4.51.v20230217</jetty.version>
+        <jetty.version>9.4.52.v20230823</jetty.version>
+        <fastjson.version>2.0.32</fastjson.version>
+        <jaxb-runtime.version>4.0.3</jaxb-runtime.version>
     </properties>
 
     <dependencies>
@@ -31,6 +33,11 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
             <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
 </project>

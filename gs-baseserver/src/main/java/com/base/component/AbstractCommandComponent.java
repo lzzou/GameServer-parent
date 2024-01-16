@@ -2,7 +2,7 @@ package com.base.component;
 
 import com.base.command.ICode;
 import com.base.command.ICommand;
-import com.zlz.util.ClassUtil;
+import com.game.util.ClassUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public abstract class AbstractCommandComponent extends AbstractComponent {
     /**
      * 取得所在包名称
      *
-     * @return
+     * @return 包名
      */
     public abstract String getCommandPacketName();
 
@@ -53,12 +53,11 @@ public abstract class AbstractCommandComponent extends AbstractComponent {
                                         clazz.getName());
                                 return false;
                             }
-                            cmdCache.put((short) cmd.code(), (ICommand) clazz.newInstance());
+                            cmdCache.put(cmd.code(), (ICommand) clazz.newInstance());
                             // continue;
                         }
                     } catch (Exception e) {
                         log.error("load command fail, command name : " + clazz.getName(), e);
-                        e.printStackTrace();
                     }
                 }
             }
@@ -86,8 +85,8 @@ public abstract class AbstractCommandComponent extends AbstractComponent {
     /**
      * 缓存中获取命令
      *
-     * @param code
-     * @return
+     * @param code 命令code
+     * @return 命令实体
      */
     public ICommand getCommand(short code) {
         return cmdCache.get(code);
